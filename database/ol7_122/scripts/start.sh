@@ -16,6 +16,7 @@ function fixConfig {
   ln -s /u02/config/${ORACLE_SID}/orapw${ORACLE_SID} ${ORACLE_HOME}/dbs/orapw${ORACLE_SID}
   ln -s /u02/config/${ORACLE_SID}/spfile${ORACLE_SID}.ora ${ORACLE_HOME}/dbs/spfile${ORACLE_SID}.ora
   ln -s /u02/config/${ORACLE_SID}/admin ${ORACLE_BASE}/admin
+  rm -Rf ${ORACLE_BASE}/diag
   ln -s /u02/config/${ORACLE_SID}/diag ${ORACLE_BASE}/diag
 }
 
@@ -51,20 +52,18 @@ exit;
 EOF
 
   # Store config files in case persistent volume is used.
-  if [ ! -d /u02/config/${ORACLE_SID} ]; then
-    mkdir -p /u02/config/${ORACLE_SID}
+  mkdir -p /u02/config/${ORACLE_SID}
     
-    cp /etc/oratab /u02/config/
-    # Flip the auto-start flag.
-    sed -i -e "s|${ORACLE_SID}:${ORACLE_HOME}:N|${ORACLE_SID}:${ORACLE_HOME}:Y|g" /u02/config/oratab
-    cp -f /u02/config/oratab /etc/oratab 
+  cp /etc/oratab /u02/config/
+  # Flip the auto-start flag.
+  sed -i -e "s|${ORACLE_SID}:${ORACLE_HOME}:N|${ORACLE_SID}:${ORACLE_HOME}:Y|g" /u02/config/oratab
+  cp -f /u02/config/oratab /etc/oratab 
     
-    mv ${ORACLE_HOME}/dbs/orapw${ORACLE_SID} /u02/config/${ORACLE_SID}
-    mv ${ORACLE_HOME}/dbs/spfile${$ORACLE_SID}.ora /u02/config/${ORACLE_SID}
-    mv ${ORACLE_BASE}/admin /u02/config/${ORACLE_SID}
-    mv ${ORACLE_BASE}/diag /u02/config/${ORACLE_SID}
-    fixConfig;
-  fi
+  mv ${ORACLE_HOME}/dbs/orapw${ORACLE_SID} /u02/config/${ORACLE_SID}
+  mv ${ORACLE_HOME}/dbs/spfile${ORACLE_SID}.ora /u02/config/${ORACLE_SID}
+  mv ${ORACLE_BASE}/admin /u02/config/${ORACLE_SID}
+  mv ${ORACLE_BASE}/diag /u02/config/${ORACLE_SID}
+  fixConfig;
 
 else
 
