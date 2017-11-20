@@ -20,7 +20,7 @@ function fixConfig {
   ln -s /u02/config/${ORACLE_SID}/diag ${ORACLE_BASE}/diag
 }
 
-# Check if database alread exists.
+# Check if database already exists.
 if [ ! -d /u02/oradata/${ORACLE_SID} ]; then
 
   # The database files don't exist, so create a new database.
