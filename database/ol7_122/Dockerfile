@@ -35,7 +35,7 @@ LABEL maintainer="tim@oracle-base.com"
 # ------------------------------------------------------------------------------
 # Define fixed (build time) environment variables.
 ENV ORACLE_BASE=/u01/app/oracle                                                \
-    ORACLE_HOME=/u01/app/oracle/product/12.2.0.2/db_1                          \
+    ORACLE_HOME=/u01/app/oracle/product/12.2.0.1/db_1                          \
     ORA_INVENTORY=/u01/app/oraInventory                                        \
     DATA_HOME=/u02/oradata                                                     \
     SOFTWARE_DIR=/u01/software                                                 \
