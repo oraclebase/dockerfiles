@@ -113,6 +113,7 @@ RUN ${SOFTWARE_DIR}/database/runInstaller -ignoreSysPrereqs -ignorePrereq      \
     DECLINE_SECURITY_UPDATES=true
 
 # Remove source software
+# Replace default APEX software with user-provided version.
 RUN rm -Rf ${SOFTWARE_DIR}/database                                         && \
     rm -Rf ${ORACLE_HOME}/apex                                              && \
     unzip -d ${ORACLE_HOME} ${SOFTWARE_DIR}/${APEX_SOFTWARE}                && \
