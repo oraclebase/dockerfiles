@@ -97,19 +97,19 @@ RUN yum -y install unzip tar gzip                                       && \
     cp -R ${SOFTWARE_DIR}/apex/images/* ${CATALINA_HOME}/webapps/i/     && \
     rm -Rf ${SOFTWARE_DIR}/apex                                         && \
     useradd tomcat                                                      && \
-    chmod u+x /u01/scripts/start.sh                                     && \
+    chmod u+x ${SCRIPTS_DIR}/*.sh                                     && \
     chown -R tomcat.tomcat /u01
 
 # Perform the following actions as the tomcat user
 USER tomcat
 
 EXPOSE 8080 8443
-HEALTHCHECK --interval=1m --start-period=5m \
+HEALTHCHECK --interval=1m --start-period=1m \
    CMD ${SCRIPTS_DIR}/healthcheck.sh >/dev/null || exit 1
 
 # ------------------------------------------------------------------------------
 # The start script performs all config based on runtime environment variables,
 # and starts tomcat.
-CMD exec /u01/scripts/start.sh
+CMD exec ${SCRIPTS_DIR}/start.sh
 
 # End
