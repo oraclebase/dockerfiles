@@ -47,6 +47,7 @@ if [ ! -d /u02/oradata/${ORACLE_SID} ]; then
 
   # Set the PDB to auto-start.
   sqlplus / as sysdba <<EOF
+alter system set db_create_file_dest='/u02/oradata';
 alter pluggable database ${PDB_NAME} save state;
 exit;
 EOF
@@ -64,6 +65,33 @@ EOF
   mv ${ORACLE_BASE}/admin /u02/config/${ORACLE_SID}
   mv ${ORACLE_BASE}/diag /u02/config/${ORACLE_SID}
   fixConfig;
+
+  # Install APEX.
+  cd ${ORACLE_HOME}/apex
+
+  sqlplus / as sysdba <<EOF
+alter session set container = ${PDB_NAME};
+create tablespace apex datafile size 1m autoextend on next 1m;
+@apexins.sql APEX APEX TEMP /i/
+
+BEGIN
+    APEX_UTIL.set_security_group_id( 10 );
+    
+    APEX_UTIL.create_user(
+        p_user_name       => 'ADMIN',
+        p_email_address   => '${APEX_EMAIL}',
+        p_web_password    => '${APEX_PASSWORD}',
+        p_developer_privs => 'ADMIN' );
+        
+    APEX_UTIL.set_security_group_id( null );
+    COMMIT;
+END;
+/
+
+@apex_rest_config.sql ${APEX_PASSWORD} ${APEX_PASSWORD}
+@apex_epg_config.sql ${ORACLE_HOME}
+exit;
+EOF
 
 else
 

@@ -4,6 +4,8 @@
 #   - Oracle Linux 7 - Slim
 #   - Oracle Database
 #       http://www.oracle.com/technetwork/database/enterprise-edition/downloads/oracle12c-windows-3633015.html
+#   - Oracle Application Express (APEX)
+#       http://www.oracle.com/technetwork/developer-tools/apex/downloads/index.html
 #
 # Example build and run.
 #
@@ -40,6 +42,7 @@ ENV ORACLE_BASE=/u01/app/oracle                                                \
     DATA_HOME=/u02/oradata                                                     \
     SOFTWARE_DIR=/u01/software                                                 \
     DB_SOFTWARE="linuxx64_12201_database.zip"                                  \
+    APEX_SOFTWARE="apex_5.1.3_en.zip"                                          \
     ORACLE_PASSWORD="oracle"                                                   \
     SCRIPTS_DIR="/u01/scripts"                                                 \
     ORAENV_ASK="NO"
@@ -52,11 +55,13 @@ ENV PATH=${ORACLE_HOME}/bin:${PATH}
 ENV ORACLE_SID="cdb1"                                                          \
     SYS_PASSWORD="SysPassword1"                                                \
     PDB_NAME="pdb1"                                                            \
-    PDB_PASSWORD="PdbPassword1"
+    PDB_PASSWORD="PdbPassword1"                                                \
+    APEX_EMAIL="me@example.com"                                                \
+    APEX_PASSWORD="ApexPassword1"
 
 # ------------------------------------------------------------------------------
 # Get all the files for the build.
-COPY ${DB_SOFTWARE} ${SOFTWARE_DIR}/
+COPY software/* ${SOFTWARE_DIR}/
 COPY scripts/* ${SCRIPTS_DIR}/
 
 # ------------------------------------------------------------------------------
@@ -108,7 +113,10 @@ RUN ${SOFTWARE_DIR}/database/runInstaller -ignoreSysPrereqs -ignorePrereq      \
     DECLINE_SECURITY_UPDATES=true
 
 # Remove source software
-RUN rm -Rf ${SOFTWARE_DIR}/database
+RUN rm -Rf ${SOFTWARE_DIR}/database                                         && \
+    rm -Rf ${ORACLE_HOME}/apex                                              && \
+    unzip -d ${ORACLE_HOME} ${SOFTWARE_DIR}/${APEX_SOFTWARE}                && \
+    rm ${SOFTWARE_DIR}/${APEX_SOFTWARE}
 
 # Run the root scripts
 USER root
