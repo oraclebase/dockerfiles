@@ -70,7 +70,7 @@ COPY scripts/* ${SCRIPTS_DIR}/
 # No config done in the build phase.
 RUN yum -y install unzip tar gzip                                       && \
     yum -y update                                                       && \
-    yum clean all                                                       && \
+    rm -Rf /var/cache/yum                                               && \
     mkdir /u01/java                                                     && \
     cd /u01/java                                                        && \
     tar -xzf ${SOFTWARE_DIR}/${JAVA_SOFTWARE}                           && \

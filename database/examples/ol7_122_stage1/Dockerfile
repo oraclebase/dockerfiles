@@ -49,7 +49,7 @@ RUN groupadd -g 500 dba                                                     && \
     yum -y install unzip tar gzip                                           && \
     yum -y update                                                           && \
     yum -y install oracle-rdbms-server-12cR1-preinstall                     && \
-    yum clean all                                                           && \
+    rm -Rf /var/cache/yum                                                   && \
     mkdir -p ${ORACLE_HOME}                                                 && \
     mkdir -p ${DATA_HOME}                                                   && \
     chown -R oracle.oinstall /u01 /u02
