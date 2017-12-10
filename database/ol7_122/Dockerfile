@@ -42,7 +42,6 @@ LABEL maintainer="tim@oracle-base.com"
 ENV ORACLE_BASE=/u01/app/oracle                                                \
     ORACLE_HOME=/u01/app/oracle/product/12.2.0.1/db_1                          \
     ORA_INVENTORY=/u01/app/oraInventory                                        \
-    DATA_HOME=/u02/oradata                                                     \
     SOFTWARE_DIR=/u01/software                                                 \
     DB_SOFTWARE="linuxx64_12201_database.zip"                                  \
     APEX_SOFTWARE="apex_5.1.3_en.zip"                                          \
@@ -83,7 +82,7 @@ RUN groupadd -g 500 dba                                                     && \
     yum -y install oracle-rdbms-server-12cR1-preinstall                     && \
     yum clean all                                                           && \
     mkdir -p ${ORACLE_HOME}                                                 && \
-    mkdir -p ${DATA_HOME}                                                   && \
+    mkdir -p /u02/oradata                                                   && \
     chown -R oracle.oinstall /u01 /u02                                      && \
     chmod u+x ${SCRIPTS_DIR}/*.sh
 
