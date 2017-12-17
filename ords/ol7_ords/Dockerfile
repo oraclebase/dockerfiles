@@ -6,7 +6,7 @@
 #       http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html
 #   - Tomcat 8.5.x :
 #       https://tomcat.apache.org/download-80.cgi
-#   - Oracle REST Data Services (ORDS) 3.0.x :
+#   - Oracle REST Data Services (ORDS) 17.x :
 #       http://www.oracle.com/technetwork/developer-tools/rest-data-services/downloads/index.html
 #   - Oracle Application Express (APEX) 5.1.x :
 #       http://www.oracle.com/technetwork/developer-tools/apex/downloads/index.html
