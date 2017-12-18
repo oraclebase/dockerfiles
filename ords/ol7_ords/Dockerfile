@@ -68,36 +68,36 @@ COPY scripts/* ${SCRIPTS_DIR}/
 # ------------------------------------------------------------------------------
 # Unpack all the software and remove the media.
 # No config done in the build phase.
-RUN yum -y install unzip tar gzip                                       && \
-    yum -y update                                                       && \
-    rm -Rf /var/cache/yum                                               && \
-    mkdir /u01/java                                                     && \
-    cd /u01/java                                                        && \
-    tar -xzf ${SOFTWARE_DIR}/${JAVA_SOFTWARE}                           && \
-    rm -f ${SOFTWARE_DIR}/${JAVA_SOFTWARE}                              && \
-    TEMP_FILE=`ls`                                                      && \
-    mv ${TEMP_FILE}/* .                                                 && \
-    rmdir ${TEMP_FILE}                                                  && \
-    mkdir /u01/tomcat                                                   && \
-    cd /u01/tomcat                                                      && \
-    tar -xzf ${SOFTWARE_DIR}/${TOMCAT_SOFTWARE}                         && \
-    rm -f ${SOFTWARE_DIR}/${TOMCAT_SOFTWARE}                            && \
-    TEMP_FILE=`ls`                                                      && \
-    mv ${TEMP_FILE}/* .                                                 && \
-    rmdir ${TEMP_FILE}                                                  && \
-    mkdir -p ${ORDS_CONF}                                               && \
-    cd ${ORDS_HOME}                                                     && \
-    unzip ${SOFTWARE_DIR}/${ORDS_SOFTWARE}                              && \
-    rm -f ${SOFTWARE_DIR}/${ORDS_SOFTWARE}                              && \
-    cd ${SOFTWARE_DIR}                                                  && \
-    unzip ${SOFTWARE_DIR}/${APEX_SOFTWARE}                              && \
-    rm -f ${SOFTWARE_DIR}/${APEX_SOFTWARE}                              && \
-    rm -Rf ${CATALINA_HOME}/webapps/*                                   && \
-    mkdir -p ${CATALINA_HOME}/webapps/i/                                && \
-    cp -R ${SOFTWARE_DIR}/apex/images/* ${CATALINA_HOME}/webapps/i/     && \
-    rm -Rf ${SOFTWARE_DIR}/apex                                         && \
-    useradd tomcat                                                      && \
-    chmod u+x ${SCRIPTS_DIR}/*.sh                                     && \
+RUN yum -y install unzip tar gzip                                           && \
+    yum -y update                                                           && \
+    rm -Rf /var/cache/yum                                                   && \
+    mkdir /u01/java                                                         && \
+    cd /u01/java                                                            && \
+    tar -xzf ${SOFTWARE_DIR}/${JAVA_SOFTWARE}                               && \
+    rm -f ${SOFTWARE_DIR}/${JAVA_SOFTWARE}                                  && \
+    TEMP_FILE=`ls`                                                          && \
+    mv ${TEMP_FILE}/* .                                                     && \
+    rmdir ${TEMP_FILE}                                                      && \
+    mkdir /u01/tomcat                                                       && \
+    cd /u01/tomcat                                                          && \
+    tar -xzf ${SOFTWARE_DIR}/${TOMCAT_SOFTWARE}                             && \
+    rm -f ${SOFTWARE_DIR}/${TOMCAT_SOFTWARE}                                && \
+    TEMP_FILE=`ls`                                                          && \
+    mv ${TEMP_FILE}/* .                                                     && \
+    rmdir ${TEMP_FILE}                                                      && \
+    mkdir -p ${ORDS_CONF}                                                   && \
+    cd ${ORDS_HOME}                                                         && \
+    unzip ${SOFTWARE_DIR}/${ORDS_SOFTWARE}                                  && \
+    rm -f ${SOFTWARE_DIR}/${ORDS_SOFTWARE}                                  && \
+    cd ${SOFTWARE_DIR}                                                      && \
+    unzip ${SOFTWARE_DIR}/${APEX_SOFTWARE}                                  && \
+    rm -f ${SOFTWARE_DIR}/${APEX_SOFTWARE}                                  && \
+    rm -Rf ${CATALINA_HOME}/webapps/*                                       && \
+    mkdir -p ${CATALINA_HOME}/webapps/i/                                    && \
+    cp -R ${SOFTWARE_DIR}/apex/images/* ${CATALINA_HOME}/webapps/i/         && \
+    rm -Rf ${SOFTWARE_DIR}/apex                                             && \
+    useradd tomcat                                                          && \
+    chmod u+x ${SCRIPTS_DIR}/*.sh                                           && \
     chown -R tomcat.tomcat /u01
 
 # Perform the following actions as the tomcat user
