@@ -79,7 +79,7 @@ RUN groupadd -g 500 dba                                                     && \
     useradd -d /home/oracle -g dba -G oinstall,dba -m -s /bin/bash oracle   && \
     yum -y install unzip tar gzip                                           && \
     yum -y update                                                           && \
-    yum -y install oracle-rdbms-server-12cR1-preinstall                     && \
+    yum -y install oracle-database-server-12cR2-preinstall                  && \
     rm -Rf /var/cache/yum                                                   && \
     mkdir -p ${ORACLE_HOME}                                                 && \
     mkdir -p /u02/oradata                                                   && \
