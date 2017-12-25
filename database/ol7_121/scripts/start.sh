@@ -16,6 +16,7 @@ function fixConfig {
   ln -s /u02/config/${ORACLE_SID}/orapw${ORACLE_SID} ${ORACLE_HOME}/dbs/orapw${ORACLE_SID}
   ln -s /u02/config/${ORACLE_SID}/spfile${ORACLE_SID}.ora ${ORACLE_HOME}/dbs/spfile${ORACLE_SID}.ora
   ln -s /u02/config/${ORACLE_SID}/admin ${ORACLE_BASE}/admin
+  ln -s /u02/config/${ORACLE_SID}/fast_recovery_area ${ORACLE_BASE}/fast_recovery_area
   rm -Rf ${ORACLE_BASE}/diag
   ln -s /u02/config/${ORACLE_SID}/diag ${ORACLE_BASE}/diag
 }
@@ -53,6 +54,7 @@ exit;
 EOF
 
   # Store config files in case persistent volume is used.
+  dbsshut $ORACLE_HOME
   mkdir -p /u02/config/${ORACLE_SID}
     
   cp /etc/oratab /u02/config/
@@ -63,13 +65,16 @@ EOF
   mv ${ORACLE_HOME}/dbs/orapw${ORACLE_SID} /u02/config/${ORACLE_SID}
   mv ${ORACLE_HOME}/dbs/spfile${ORACLE_SID}.ora /u02/config/${ORACLE_SID}
   mv ${ORACLE_BASE}/admin /u02/config/${ORACLE_SID}
+  mv ${ORACLE_BASE}/fast_recovery_area /u02/config/${ORACLE_SID}
   mv ${ORACLE_BASE}/diag /u02/config/${ORACLE_SID}
   fixConfig;
-
+  dbstart $ORACLE_HOME
+  
   # Install APEX.
   cd ${ORACLE_HOME}/apex
 
   sqlplus / as sysdba <<EOF
+@apxremov_cdb.sql
 alter session set container = ${PDB_NAME};
 create tablespace apex datafile size 1m autoextend on next 1m;
 @apexins.sql APEX APEX TEMP /i/
