@@ -74,7 +74,7 @@ EOF
   cd ${ORACLE_HOME}/apex
 
   sqlplus / as sysdba <<EOF
-@apxremov_cdb.sql
+@apxremov.sql
 alter session set container = ${PDB_NAME};
 create tablespace apex datafile size 1m autoextend on next 1m;
 @apexins.sql APEX APEX TEMP /i/
