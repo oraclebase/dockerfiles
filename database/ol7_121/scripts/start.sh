@@ -75,6 +75,7 @@ EOF
 
   sqlplus / as sysdba <<EOF
 @apxremov.sql
+DROP PACKAGE SYS.WWV_DBMS_SQL;
 alter session set container = ${PDB_NAME};
 create tablespace apex datafile size 1m autoextend on next 1m;
 @apexins.sql APEX APEX TEMP /i/
