@@ -34,9 +34,7 @@ if [ ! -d /u02/oradata/${ORACLE_SID} ]; then
     -sysPassword ${SYS_PASSWORD}                                               \
     -systemPassword ${SYS_PASSWORD}                                            \
     -createAsContainerDatabase true                                            \
-    -numberOfPDBs 1                                                            \
-    -pdbName ${PDB_NAME}                                                       \
-    -pdbAdminPassword ${PDB_PASSWORD}                                          \
+    -numberOfPDBs 0                                                            \
     -databaseType MULTIPURPOSE                                                 \
     -automaticMemoryManagement false                                           \
     -totalMemory 1536                                                          \
@@ -49,12 +47,11 @@ if [ ! -d /u02/oradata/${ORACLE_SID} ]; then
   # Set the PDB to auto-start.
   sqlplus / as sysdba <<EOF
 alter system set db_create_file_dest='/u02/oradata';
-alter pluggable database ${PDB_NAME} save state;
 exit;
 EOF
 
   # Store config files in case persistent volume is used.
-  dbsshut $ORACLE_HOME
+  dbshut $ORACLE_HOME
   mkdir -p /u02/config/${ORACLE_SID}
     
   cp /etc/oratab /u02/config/
@@ -70,13 +67,20 @@ EOF
   fixConfig;
   dbstart $ORACLE_HOME
   
-  # Install APEX.
+  # Remove APEX, create PDB and install APEX.
   cd ${ORACLE_HOME}/apex
 
   sqlplus / as sysdba <<EOF
 @apxremov.sql
-DROP PACKAGE SYS.WWV_DBMS_SQL;
+drop package sys.wwv_dbms_sql;
+
+create pluggable database ${PDB_NAME} admin user pdbadmin identified by ${PDB_PASSWORD};
+alter pluggable database ${PDB_NAME} open;
+alter pluggable database ${PDB_NAME} save state;
+
 alter session set container = ${PDB_NAME};
+exec dbms_pdb.exec_as_oracle_script('drop package sys.wwv_dbms_sql');
+
 create tablespace apex datafile size 1m autoextend on next 1m;
 @apexins.sql APEX APEX TEMP /i/
 
