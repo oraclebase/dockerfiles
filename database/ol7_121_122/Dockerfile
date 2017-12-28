@@ -38,7 +38,7 @@ ENV ORACLE_BASE=/u01/app/oracle                                                \
     ORACLE_HOME_2=/u01/app/oracle/product/12.2.0.1/db_1                        \
     ORA_INVENTORY=/u01/app/oraInventory                                        \
     SOFTWARE_DIR=/u01/software                                                 \
-    DB_SOFTWARE="linuxx64_12201_database.zip"                                \
+    DB_SOFTWARE="linuxx64_12201_database.zip"                                  \
     ORACLE_PASSWORD="oracle"                                                   \
     SCRIPTS_DIR="/u01/scripts"                                                 \
     ORAENV_ASK="NO"
@@ -89,7 +89,7 @@ RUN ${SOFTWARE_DIR}/database/runInstaller -ignoreSysPrereqs -ignorePrereq      \
     UNIX_GROUP_NAME=oinstall                                                   \
     INVENTORY_LOCATION=${ORA_INVENTORY}                                        \
     SELECTED_LANGUAGES=en,en_GB                                                \
-    ORACLE_HOME=${ORACLE_HOME_2}                                                 \
+    ORACLE_HOME=${ORACLE_HOME_2}                                               \
     ORACLE_BASE=${ORACLE_BASE}                                                 \
     oracle.install.db.InstallEdition=EE                                        \
     oracle.install.db.OSDBA_GROUP=dba                                          \
