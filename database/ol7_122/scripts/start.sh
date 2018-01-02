@@ -54,7 +54,7 @@ exit;
 EOF
 
   # Store config files in case persistent volume is used.
-  dbsshut $ORACLE_HOME
+  dbshut ${ORACLE_HOME}
   mkdir -p /u02/config/${ORACLE_SID}
     
   cp /etc/oratab /u02/config/
@@ -65,10 +65,12 @@ EOF
   mv ${ORACLE_HOME}/dbs/orapw${ORACLE_SID} /u02/config/${ORACLE_SID}
   mv ${ORACLE_HOME}/dbs/spfile${ORACLE_SID}.ora /u02/config/${ORACLE_SID}
   mv ${ORACLE_BASE}/admin /u02/config/${ORACLE_SID}
+  # Make sure FRA is present, in case it has not been created yet.
+  mkdir -p ${ORACLE_BASE}/fast_recovery_area
   mv ${ORACLE_BASE}/fast_recovery_area /u02/config/${ORACLE_SID}
   mv ${ORACLE_BASE}/diag /u02/config/${ORACLE_SID}
   fixConfig;
-  dbstart $ORACLE_HOME
+  dbstart ${ORACLE_HOME}
 
   # Install APEX.
   cd ${ORACLE_HOME}/apex
