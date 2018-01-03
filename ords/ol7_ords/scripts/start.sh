@@ -8,6 +8,33 @@ trap gracefulshutdown SIGINT
 trap gracefulshutdown SIGTERM
 trap gracefulshutdown SIGKILL
 
+function check_db {
+  CONNECTION=$1
+  RETVAL=`/u01/sqlcl/bin/sql -silent ${CONNECTION} <<EOF
+SET PAGESIZE 0 FEEDBACK OFF VERIFY OFF HEADING OFF ECHO OFF TAB OFF
+SELECT 'Alive' FROM dual;
+EXIT;
+EOF`
+
+  RETVAL="${RETVAL//[$'\t\r\n']}"
+  if [ "${RETVAL}" = "Alive" ]; then
+    DB_OK=0
+  else
+    DB_OK=1
+  fi
+}
+
+# Wait for the DB to be available.
+CONNECTION="APEX_PUBLIC_USER/${APEX_PUBLIC_USER_PASSWORD}@//${DB_HOSTNAME}:${DB_PORT}/${DB_SERVICE}"
+echo "Check DB is available."
+check_db ${CONNECTION}
+while [ ${DB_OK} -eq 1 ]
+do
+  echo "DB not available yet. Waiting for 1 minute."
+  sleep 60
+  check_db ${CONNECTION}
+done
+
 # Prep the ORDS parameter file.
 cat > ${ORDS_HOME}/params/ords_params.properties <<EOF
 db.hostname=${DB_HOSTNAME}

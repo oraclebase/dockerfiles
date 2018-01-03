@@ -10,6 +10,8 @@
 #       http://www.oracle.com/technetwork/developer-tools/rest-data-services/downloads/index.html
 #   - Oracle Application Express (APEX) 5.1.x :
 #       http://www.oracle.com/technetwork/developer-tools/apex/downloads/index.html
+#   - Oracle SQLcl 17.x :
+#       http://www.oracle.com/technetwork/developer-tools/sqlcl/downloads/index.html
 #
 # Example build and run. Assumes Docker network called "my_network" to connect to DB.
 #
@@ -38,6 +40,7 @@ ENV JAVA_SOFTWARE="jdk-8u151-linux-x64.tar.gz"                                 \
     TOMCAT_SOFTWARE="apache-tomcat-8.5.24.tar.gz"                              \
     ORDS_SOFTWARE="ords.17.4.1.353.06.48.zip"                                  \
     APEX_SOFTWARE="apex_5.1.3_en.zip"                                          \
+    SQLCL_SOFTWARE="sqlcl-17.4.0.354.2224-no-jre.zip"                          \
     SOFTWARE_DIR="/u01/software"                                               \
     SCRIPTS_DIR="/u01/scripts"                                                 \
     KEYSTORE_DIR="/u01/keystore"                                               \
@@ -89,6 +92,9 @@ RUN yum -y install unzip tar gzip                                           && \
     cd ${ORDS_HOME}                                                         && \
     unzip ${SOFTWARE_DIR}/${ORDS_SOFTWARE}                                  && \
     rm -f ${SOFTWARE_DIR}/${ORDS_SOFTWARE}                                  && \
+    cd /u01                                                                 && \
+    unzip ${SOFTWARE_DIR}/${SQLCL_SOFTWARE}                                 && \
+    rm -f ${SOFTWARE_DIR}/${SQLCL_SOFTWARE}                                 && \
     cd ${SOFTWARE_DIR}                                                      && \
     unzip ${SOFTWARE_DIR}/${APEX_SOFTWARE}                                  && \
     rm -f ${SOFTWARE_DIR}/${APEX_SOFTWARE}                                  && \
