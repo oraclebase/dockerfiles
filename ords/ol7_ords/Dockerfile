@@ -17,6 +17,8 @@
 #
 # docker build -t ol7_ords:latest .
 # docker run -dit --name ol7_ords_con -p 8080:8080 -p 8443:8443 --network=my_network -e DB_HOSTNAME=ol7_122_con ol7_ords:latest
+#
+# docker logs --follow ol7_ords_con
 # docker exec -it ol7_ords_con bash
 #
 # docker stop --time=30 ol7_ords_con

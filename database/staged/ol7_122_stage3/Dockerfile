@@ -13,6 +13,7 @@
 # Persistent storage.
 # docker run -dit --name ol7_122_con -p 1521:1521 -p 5500:5500 -v /home/docker_user/volumes/ol7_122_con_u02/:/u02 ol7_122_stage3:latest
 #
+# docker logs --follow ol7_122_con
 # docker exec -it ol7_122_con bash
 #
 # docker stop --time=30 ol7_122_con

@@ -14,6 +14,7 @@
 # Persistent storage.
 # docker run -dit --name ol7_121_122_con -p 1521:1521 -p 5500:5500 --shm-size="1G" -v /home/docker_user/volumes/ol7_121_con_u02/:/u02 ol7_121_122:latest
 #
+# docker logs --follow ol7_121_122_con
 # docker exec -it ol7_121_122_con bash
 #
 # docker stop --time=30 ol7_121_122_con

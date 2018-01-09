@@ -20,6 +20,7 @@
 # Persistent storage and part of Docker network called "my_network".
 # docker run -dit --name ol7_121_con -p 1521:1521 -p 5500:5500 --shm-size="1G" --network=my_network -v /home/docker_user/volumes/ol7_121_con_u02/:/u02 ol7_121:latest
 #
+# docker logs --follow ol7_121_con
 # docker exec -it ol7_121_con bash
 #
 # docker stop --time=30 ol7_121_con
