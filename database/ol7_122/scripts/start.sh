@@ -21,6 +21,19 @@ function fixConfig {
   ln -s /u02/config/${ORACLE_SID}/diag ${ORACLE_BASE}/diag
 }
 
+# Create a listener.ora file if it doesn't already exist.
+if [ ! -f ${ORACLE_HOME}/network/admin/listener.ora ]; then
+echo "LISTENER = 
+(DESCRIPTION_LIST = 
+  (DESCRIPTION = 
+    (ADDRESS = (PROTOCOL = IPC)(KEY = EXTPROC1)) 
+    (ADDRESS = (PROTOCOL = TCP)(HOST = 0.0.0.0)(PORT = 1521)) 
+  ) 
+) 
+USE_SID_AS_SERVICE_listener=on
+" > ${ORACLE_HOME}/network/admin/listener.ora
+fi
+
 # Check if database already exists.
 if [ ! -d /u02/oradata/${ORACLE_SID} ]; then
 
