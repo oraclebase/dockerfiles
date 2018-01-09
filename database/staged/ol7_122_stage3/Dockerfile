@@ -33,12 +33,12 @@ LABEL maintainer="tim@oracle-base.com"
 
 # ------------------------------------------------------------------------------
 # Define fixed (build time) environment variables.
-ENV ORACLE_BASE="/u01/app/oracle"                                              \
-    ORACLE_HOME="/u01/app/oracle/product/12.2.0.1/db_1"                        \
-    ORA_INVENTORY="/u01/app/oraInventory"                                      \
-    DATA_HOME="/u02/oradata"                                                   \
-    SCRIPTS_DIR="/u01/scripts"                                                 \
-    ORAENV_ASK="NO"
+ENV ORACLE_BASE=/u01/app/oracle                                                \
+    ORACLE_HOME=/u01/app/oracle/product/12.2.0.1/db_1                          \
+    ORA_INVENTORY=/u01/app/oraInventory                                        \
+    DATA_HOME=/u02/oradata                                                     \
+    SCRIPTS_DIR=/u01/scripts                                                   \
+    ORAENV_ASK=NO
 
 # Separate ENV call to allow existing variables to be referenced.
 ENV PATH=${ORACLE_HOME}/bin:${PATH}

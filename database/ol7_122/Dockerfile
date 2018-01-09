@@ -47,15 +47,15 @@ ENV ORACLE_BASE=/u01/app/oracle                                                \
     DB_SOFTWARE="linuxx64_12201_database.zip"                                  \
     APEX_SOFTWARE="apex_5.1.3_en.zip"                                          \
     ORACLE_PASSWORD="oracle"                                                   \
-    SCRIPTS_DIR="/u01/scripts"                                                 \
-    ORAENV_ASK="NO"
+    SCRIPTS_DIR=/u01/scripts                                                   \
+    ORAENV_ASK=NO
 
 # Separate ENV call to allow existing variables to be referenced.
 ENV PATH=${ORACLE_HOME}/bin:${PATH}
 
 # ------------------------------------------------------------------------------
 # Define config (runtime) environment variables.
-ENV ORACLE_SID="cdb1"                                                          \
+ENV ORACLE_SID=cdb1                                                          \
     SYS_PASSWORD="SysPassword1"                                                \
     PDB_NAME="pdb1"                                                            \
     PDB_PASSWORD="PdbPassword1"                                                \

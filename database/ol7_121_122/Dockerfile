@@ -41,8 +41,8 @@ ENV ORACLE_BASE=/u01/app/oracle                                                \
     SOFTWARE_DIR=/u01/software                                                 \
     DB_SOFTWARE="linuxx64_12201_database.zip"                                  \
     ORACLE_PASSWORD="oracle"                                                   \
-    SCRIPTS_DIR="/u01/scripts"                                                 \
-    ORAENV_ASK="NO"
+    SCRIPTS_DIR=/u01/scripts                                                   \
+    ORAENV_ASK=NO
 
 # Separate ENV call to allow existing variables to be referenced.
 ENV PATH=${ORACLE_HOME_1}/bin:${PATH}
