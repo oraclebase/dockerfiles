@@ -16,6 +16,8 @@
 # Example build and run. Assumes Docker network called "my_network" to connect to DB.
 #
 # docker build -t ol7_ords:latest .
+# docker build --squash -t ol7_ords:latest .
+#
 # docker run -dit --name ol7_ords_con -p 8080:8080 -p 8443:8443 --network=my_network -e DB_HOSTNAME=ol7_122_con ol7_ords:latest
 #
 # docker logs --follow ol7_ords_con
@@ -38,10 +40,10 @@ LABEL maintainer="tim@oracle-base.com"
 
 # ------------------------------------------------------------------------------
 # Define fixed (build time) environment variables.
-ENV JAVA_SOFTWARE="jdk-8u151-linux-x64.tar.gz"                                 \
+ENV JAVA_SOFTWARE="jdk-8u161-linux-x64.tar.gz"                                 \
     TOMCAT_SOFTWARE="apache-tomcat-8.5.24.tar.gz"                              \
     ORDS_SOFTWARE="ords.17.4.1.353.06.48.zip"                                  \
-    APEX_SOFTWARE="apex_5.1.3_en.zip"                                          \
+    APEX_SOFTWARE="apex_5.1.4_en.zip"                                          \
     SQLCL_SOFTWARE="sqlcl-17.4.0.354.2224-no-jre.zip"                          \
     SOFTWARE_DIR="/u01/software"                                               \
     SCRIPTS_DIR="/u01/scripts"                                                 \
