@@ -10,6 +10,7 @@
 # Example build and run.
 #
 # docker build -t ol7_122:latest .
+# docker build --squash -t ol7_122:latest .
 #
 # Non-persistent storage.
 # docker run -dit --name ol7_122_con -p 1521:1521 -p 5500:5500 --shm-size="1G" ol7_122:latest
@@ -45,7 +46,7 @@ ENV ORACLE_BASE=/u01/app/oracle                                                \
     ORA_INVENTORY=/u01/app/oraInventory                                        \
     SOFTWARE_DIR=/u01/software                                                 \
     DB_SOFTWARE="linuxx64_12201_database.zip"                                  \
-    APEX_SOFTWARE="apex_5.1.3_en.zip"                                          \
+    APEX_SOFTWARE="apex_5.1.4_en.zip"                                          \
     ORACLE_PASSWORD="oracle"                                                   \
     SCRIPTS_DIR=/u01/scripts                                                   \
     ORAENV_ASK=NO
