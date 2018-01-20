@@ -21,7 +21,9 @@ function fixConfig {
   ln -s /u02/config/${ORACLE_SID}/diag ${ORACLE_BASE}/diag
 }
 
-# Create a listener.ora file if it doesn't already exist.
+echo "**************************************************************************"
+echo "Create a listener.ora file if it doesn't already exist."
+echo "**************************************************************************"
 if [ ! -f ${ORACLE_HOME}/network/admin/listener.ora ]; then
 echo "LISTENER = 
 (DESCRIPTION_LIST = 
@@ -34,11 +36,15 @@ USE_SID_AS_SERVICE_listener=on
 " > ${ORACLE_HOME}/network/admin/listener.ora
 fi
 
-# Startup 12.1 database,
+echo "**************************************************************************"
+echo "Startup 12.1 database."
+echo "**************************************************************************"
 fixConfig;
 dbstart $ORACLE_HOME
 
-# Prepare for the preupgrade checks.
+echo "**************************************************************************"
+echo "Prepare for the preupgrade checks."
+echo "**************************************************************************"
 sqlplus / as sysdba <<EOF
 purge dba_recyclebin;
 exec dbms_stats.gather_dictionary_stats;
@@ -50,20 +56,26 @@ exec dbms_stats.gather_dictionary_stats;
 EXIT;
 EOF
 
-# Run the preupgrade checks. There shouldn't be any failures in this example.
-$ORACLE_HOME/jdk/bin/java -jar ${ORACLE_HOME_2}/rdbms/admin/preupgrade.jar TERMINAL TEXT -c "${PDB_NAME}"
+echo "**************************************************************************"
+echo "Run the preupgrade checks. There shouldn't be any failures in this example."
+echo "**************************************************************************"
+${ORACLE_HOME_2}/jdk/bin/java -jar ${ORACLE_HOME_2}/rdbms/admin/preupgrade.jar TERMINAL TEXT -c "${PDB_NAME}"
 
 # Get the uppercase version of the PDB name.
 export PDB_NAME_UPPER=`echo ${PDB_NAME} | tr /a-z/ /A-Z/`
 
-# There shouldn't be any fixups, but just in case.
+echo "**************************************************************************"
+echo "There shouldn't be any fixups, but run them just in case."
+echo "**************************************************************************"
 sqlplus / as sysdba <<EOF
 alter session set container=${PDB_NAME};
 @/u01/app/oracle/cfgtoollogs/c/preupgrade/preupgrade_fixups.sql
 EXIT;
 EOF
 
-# Unplug the PDB.
+echo "**************************************************************************"
+echo "Unplug the PDB."
+echo "**************************************************************************"
 mkdir -p /u02/config/${ORACLE_SID}/unplug
 sqlplus / as sysdba <<EOF
 ALTER PLUGGABLE DATABASE ${PDB_NAME} CLOSE;
@@ -71,19 +83,27 @@ ALTER PLUGGABLE DATABASE ${PDB_NAME} UNPLUG INTO '/u02/config/${ORACLE_SID}/unpl
 EXIT;
 EOF
 
-# Zip the files to keep them safe.
+echo "**************************************************************************"
+echo "Zip the files to keep them safe."
+echo "**************************************************************************"
 cat /u02/config/${ORACLE_SID}/unplug/${PDB_NAME}.xml | grep path | sed -e 's/<[^>]*>//g' > /tmp/datafiles.txt
 zip /u02/config/${ORACLE_SID}/unplug/datafiles.zip  `cat /tmp/datafiles.txt`
 
-# Remove the 12.1 instance.
+echo "**************************************************************************"
+echo "Remove the 12.1 instance."
+echo "**************************************************************************"
 dbca -silent -deleteDatabase -sourceDB ${ORACLE_SID} -sysDBAUserName sys -sysDBAPassword ${ORACLE_PASSWORD}
 lsnrctl stop
 
-# Switch to the 12.2 home.
+echo "**************************************************************************"
+echo "Switch to the 12.2 home."
+echo "**************************************************************************"
 export ORACLE_HOME=${ORACLE_HOME_2}
 export PATH=${ORACLE_HOME}/bin:$PATH
 
-# Start the listener and recreate the instance.
+echo "**************************************************************************"
+echo "Start the listener and recreate the instance."
+echo "**************************************************************************"
 lsnrctl start
 
 dbca -silent -createDatabase                                                    \
@@ -103,7 +123,9 @@ dbca -silent -createDatabase                                                    
      -emConfiguration NONE                                                      \
      -ignorePreReqs
 
-# Store config for the new instance.
+echo "**************************************************************************"
+echo "Store config for the new instance."
+echo "**************************************************************************"
 dbshut $ORACLE_HOME
 mkdir -p /u02/config/${ORACLE_SID}
   
@@ -117,7 +139,9 @@ mv ${ORACLE_HOME}/dbs/spfile${ORACLE_SID}.ora /u02/config/${ORACLE_SID}
 fixConfig;
 dbstart $ORACLE_HOME
 
-# Create the PDB from the zip file.
+echo "**************************************************************************"
+echo "Create the PDB from the zip file."
+echo "**************************************************************************"
 cd /
 unzip /u02/config/${ORACLE_SID}/unplug/datafiles.zip
 
@@ -132,11 +156,15 @@ EOF
 # I commented this out during development.
 #rm -Rf /u02/config/${ORACLE_SID}/unplug
 
-# Upgrade the new PDB.
+echo "**************************************************************************"
+echo "Upgrade the new PDB."
+echo "**************************************************************************"
 cd ${ORACLE_HOME}/rdbms/admin 
 ${ORACLE_HOME}/perl/bin/perl catctl.pl -c "${PDB_NAME}" -l /tmp catupgrd.sql
 
-# Run post-upgrade fixups.
+echo "**************************************************************************"
+echo "Run post-upgrade fixups."
+echo "**************************************************************************"
 sqlplus / as sysdba <<EOF
 alter session set container=pdb1;
 startup;
@@ -148,6 +176,9 @@ exit;
 EOF
 
 
+echo "**************************************************************************"
+echo "Complete..."
+echo "**************************************************************************"
 # Tail the alert log file as a background process
 # and wait on the process so script never ends.
 tail -f ${ORACLE_BASE}/diag/rdbms/${ORACLE_SID}/${ORACLE_SID}/trace/alert_${ORACLE_SID}.log &
