@@ -3,7 +3,7 @@
 # Based on the following:
 #   - Oracle Linux 7 - Slim
 #   - Oracle Database
-#       http://www.oracle.com/technetwork/database/enterprise-edition/downloads/oracle12c-windows-3633015.html
+#       http://www.oracle.com/technetwork/database/enterprise-edition/downloads/index.html
 #   - Oracle Application Express (APEX)
 #       http://www.oracle.com/technetwork/developer-tools/apex/downloads/index.html
 #
