@@ -72,7 +72,7 @@ cp ords.war ${CATALINA_HOME}/webapps/
 if [ ! -f ${KEYSTORE_DIR}/keystore.jks ]; then
   mkdir -p ${KEYSTORE_DIR}
   cd ${KEYSTORE_DIR}
-  ${JAVA_HOME}/jre/bin/keytool -genkey -keyalg RSA -alias selfsigned -keystore keystore.jks \
+  ${JAVA_HOME}/bin/keytool -genkey -keyalg RSA -alias selfsigned -keystore keystore.jks \
      -dname "CN=${HOSTNAME}, OU=My Department, O=My Company, L=Birmingham, ST=West Midlands, C=GB" \
      -storepass ${KEYSTORE_PASSWORD} -validity 3600 -keysize 2048 -keypass ${KEYSTORE_PASSWORD}
 
