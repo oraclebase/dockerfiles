@@ -3,14 +3,14 @@
 # Based on the following:
 #   - Oracle Linux 7 - Slim
 #   - Java 8 :
-#       http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html
-#   - Tomcat 8.5.x :
-#       https://tomcat.apache.org/download-80.cgi
-#   - Oracle REST Data Services (ORDS) 17.x :
+#       http://www.oracle.com/technetwork/java/javase/downloads/jdk9-downloads-3848520.html
+#   - Tomcat 9.0.x :
+#       https://tomcat.apache.org/download-90.cgi
+#   - Oracle REST Data Services (ORDS) 18.x :
 #       http://www.oracle.com/technetwork/developer-tools/rest-data-services/downloads/index.html
 #   - Oracle Application Express (APEX) 5.1.x :
 #       http://www.oracle.com/technetwork/developer-tools/apex/downloads/index.html
-#   - Oracle SQLcl 17.x :
+#   - Oracle SQLcl 18.x :
 #       http://www.oracle.com/technetwork/developer-tools/sqlcl/downloads/index.html
 #
 # Example build and run. Assumes Docker network called "my_network" to connect to DB.
@@ -40,11 +40,11 @@ LABEL maintainer="tim@oracle-base.com"
 
 # ------------------------------------------------------------------------------
 # Define fixed (build time) environment variables.
-ENV JAVA_SOFTWARE="jdk-8u161-linux-x64.tar.gz"                                 \
-    TOMCAT_SOFTWARE="apache-tomcat-8.5.24.tar.gz"                              \
-    ORDS_SOFTWARE="ords.17.4.1.353.06.48.zip"                                  \
+ENV JAVA_SOFTWARE="jdk-9.0.4_linux-x64_bin.tar.gz"                             \
+    TOMCAT_SOFTWARE="apache-tomcat-9.0.6.tar.gz"                               \
+    ORDS_SOFTWARE="ords.18.1.1.95.1251.zip"                                    \
     APEX_SOFTWARE="apex_5.1.4_en.zip"                                          \
-    SQLCL_SOFTWARE="sqlcl-17.4.0.354.2224-no-jre.zip"                          \
+    SQLCL_SOFTWARE="sqlcl-18.1.0.zip"                                          \
     SOFTWARE_DIR="/u01/software"                                               \
     SCRIPTS_DIR="/u01/scripts"                                                 \
     KEYSTORE_DIR="/u01/keystore"                                               \
@@ -99,6 +99,7 @@ RUN yum -y install unzip tar gzip                                           && \
     cd /u01                                                                 && \
     unzip ${SOFTWARE_DIR}/${SQLCL_SOFTWARE}                                 && \
     rm -f ${SOFTWARE_DIR}/${SQLCL_SOFTWARE}                                 && \
+    mv /u01/*sqlcl* /u01/sqlcl                                              && \
     cd ${SOFTWARE_DIR}                                                      && \
     unzip ${SOFTWARE_DIR}/${APEX_SOFTWARE}                                  && \
     rm -f ${SOFTWARE_DIR}/${APEX_SOFTWARE}                                  && \
