@@ -2,7 +2,7 @@
 # Dockerfile to build basic Oracle REST Data Services (ORDS) images
 # Based on the following:
 #   - Oracle Linux 7 - Slim
-#   - Java 8 :
+#   - Java 9 :
 #       http://www.oracle.com/technetwork/java/javase/downloads/jdk9-downloads-3848520.html
 #   - Tomcat 9.0.x :
 #       https://tomcat.apache.org/download-90.cgi
