@@ -41,7 +41,7 @@ LABEL maintainer="tim@oracle-base.com"
 # ------------------------------------------------------------------------------
 # Define fixed (build time) environment variables.
 ENV JAVA_SOFTWARE="jdk-8u161-linux-x64.tar.gz"                                 \
-    TOMCAT_SOFTWARE="apache-tomcat-8.5.29.tar.gz"                              \
+    TOMCAT_SOFTWARE="apache-tomcat-8.5.30.tar.gz"                              \
     ORDS_SOFTWARE="ords.18.1.1.95.1251.zip"                                    \
     APEX_SOFTWARE="apex_5.1.4_en.zip"                                          \
     SQLCL_SOFTWARE="sqlcl-18.1.0.zip"                                          \
