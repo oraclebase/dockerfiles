@@ -2,8 +2,8 @@
 # Dockerfile to build basic Oracle REST Data Services (ORDS) images
 # Based on the following:
 #   - Oracle Linux 7 - Slim
-#   - Java 9 :
-#       http://www.oracle.com/technetwork/java/javase/downloads/jdk9-downloads-3848520.html
+#   - Java 10 :
+#       http://www.oracle.com/technetwork/java/javase/downloads/jdk10-downloads-4416644.html
 #   - Tomcat 9.0.x :
 #       https://tomcat.apache.org/download-90.cgi
 #   - Oracle REST Data Services (ORDS) 18.x :
@@ -40,8 +40,8 @@ LABEL maintainer="tim@oracle-base.com"
 
 # ------------------------------------------------------------------------------
 # Define fixed (build time) environment variables.
-ENV JAVA_SOFTWARE="jdk-9.0.4_linux-x64_bin.tar.gz"                             \
-    TOMCAT_SOFTWARE="apache-tomcat-9.0.6.tar.gz"                               \
+ENV JAVA_SOFTWARE="jdk-10.0.1_linux-x64_bin.tar.gz"                            \
+    TOMCAT_SOFTWARE="apache-tomcat-9.0.7.tar.gz"                               \
     ORDS_SOFTWARE="ords.18.1.1.95.1251.zip"                                    \
     APEX_SOFTWARE="apex_5.1.4_en.zip"                                          \
     SQLCL_SOFTWARE="sqlcl-18.1.0.zip"                                          \
