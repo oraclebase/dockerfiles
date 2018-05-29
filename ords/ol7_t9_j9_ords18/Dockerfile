@@ -8,7 +8,7 @@
 #       https://tomcat.apache.org/download-90.cgi
 #   - Oracle REST Data Services (ORDS) 18.x :
 #       http://www.oracle.com/technetwork/developer-tools/rest-data-services/downloads/index.html
-#   - Oracle Application Express (APEX) 5.1.x :
+#   - Oracle Application Express (APEX) 18.x :
 #       http://www.oracle.com/technetwork/developer-tools/apex/downloads/index.html
 #   - Oracle SQLcl 18.x :
 #       http://www.oracle.com/technetwork/developer-tools/sqlcl/downloads/index.html
