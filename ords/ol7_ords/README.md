@@ -16,12 +16,12 @@ $ tree
 │   ├── server.xml
 │   └── start.sh
 └── software
-    ├── apache-tomcat-9.0.8.tar.gz
+    ├── apache-tomcat-9.0.10.tar.gz
     ├── apex_18.1_en.zip
-    ├── jdk-10.0.1_linux-x64_bin.tar.gz
-    ├── ords.18.1.1.95.1251.zip
+    ├── jdk-10.0.2_linux-x64_bin.tar.gz
+    ├── ords-18.2.0.zip
     ├── put_software_here.txt
-    └── sqlcl-18.1.1.zip
+    └── sqlcl-18.2.0.zip
 
 2 directories, 11 files
 $
