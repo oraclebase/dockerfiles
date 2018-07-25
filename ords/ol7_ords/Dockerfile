@@ -8,7 +8,7 @@
 #       https://tomcat.apache.org/download-90.cgi
 #   - Oracle REST Data Services (ORDS) 18.x :
 #       http://www.oracle.com/technetwork/developer-tools/rest-data-services/downloads/index.html
-#   - Oracle Application Express (APEX) 5.1.x :
+#   - Oracle Application Express (APEX) 18.x :
 #       http://www.oracle.com/technetwork/developer-tools/apex/downloads/index.html
 #   - Oracle SQLcl 18.x :
 #       http://www.oracle.com/technetwork/developer-tools/sqlcl/downloads/index.html
@@ -18,7 +18,7 @@
 # docker build -t ol7_ords:latest .
 # docker build --squash -t ol7_ords:latest .
 #
-# docker run -dit --name ol7_ords_con -p 8080:8080 -p 8443:8443 --network=my_network -e DB_HOSTNAME=ol7_122_con ol7_ords:latest
+# docker run -dit --name ol7_ords_con -p 8080:8080 -p 8443:8443 --network=my_network -e DB_HOSTNAME=ol7_183_con ol7_ords:latest
 #
 # docker logs --follow ol7_ords_con
 # docker exec -it ol7_ords_con bash
@@ -40,7 +40,7 @@ LABEL maintainer="tim@oracle-base.com"
 
 # ------------------------------------------------------------------------------
 # Define fixed (build time) environment variables.
-ENV JAVA_SOFTWARE="jdk-10.0.1_linux-x64_bin.tar.gz"                            \
+ENV JAVA_SOFTWARE="jdk-10.0.2_linux-x64_bin.tar.gz"                            \
     TOMCAT_SOFTWARE="apache-tomcat-9.0.10.tar.gz"                              \
     ORDS_SOFTWARE="ords-18.2.0.zip"                                            \
     APEX_SOFTWARE="apex_18.1_en.zip"                                           \ 
