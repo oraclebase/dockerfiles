@@ -60,6 +60,7 @@ ENV ORACLE_SID=cdb1                                                            \
     SYS_PASSWORD="SysPassword1"                                                \
     PDB_NAME="pdb1"                                                            \
     PDB_PASSWORD="PdbPassword1"                                                \
+    INSTALL_APEX="true"                                                        \
     APEX_EMAIL="me@example.com"                                                \
     APEX_PASSWORD="ApexPassword1"
 
