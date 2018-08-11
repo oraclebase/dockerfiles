@@ -144,12 +144,13 @@ EOF
   fixConfig;
   dbstart ${ORACLE_HOME}
 
-  echo "******************************************************************************"
-  echo "Install APEX." `date`
-  echo "******************************************************************************"
-  cd ${ORACLE_HOME}/apex
+  if [ "$INSTALL_APEX" = "true" ]; then
+    echo "******************************************************************************"
+    echo "Install APEX." `date`
+    echo "******************************************************************************"
+    cd ${ORACLE_HOME}/apex
 
-  sqlplus / as sysdba <<EOF
+    sqlplus / as sysdba <<EOF
 alter session set container = ${PDB_NAME};
 create tablespace apex datafile size 1m autoextend on next 1m;
 @apexins.sql APEX APEX TEMP /i/
@@ -175,6 +176,8 @@ alter user APEX_PUBLIC_USER identified by ${APEX_PASSWORD} account unlock;
 
 exit;
 EOF
+
+  fi  
 
 else
 
