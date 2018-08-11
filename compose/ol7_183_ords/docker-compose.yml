@@ -1,4 +1,4 @@
-version: '2'
+version: '3'
 
 # ------------------------------------------------------------------------------
 # These images must be built in advance, or docker-compose will build them.
@@ -18,16 +18,10 @@ services:
   ordsservice:
     build:
       context: ../../ords/ol7_ords/
-      #context: ../../ords/ol7_t8_j8_ords18/
-      #context: ../../ords/ol7_t9_j9_ords18/
-      #context: ../../ords/ol7_t9_j10_ords18/
       dockerfile: Dockerfile
     depends_on:
       - dbservice
     image: ol7_ords:latest
-    #image: ol7_t8_j8_ords18:latest
-    #image: ol7_t9_j9_ords18:latest
-    #image: ol7_t9_j10_ords18:latest
     environment:
       - DB_HOSTNAME=dbservice
       - DB_PORT=1521
@@ -40,8 +34,6 @@ services:
       - PUBLIC_PASSWORD=ApexPassword1
       - SYS_PASSWORD=SysPassword1
       - KEYSTORE_PASSWORD=KeystorePassword1
-    networks:
-      - backend
     ports:
       - "8080:8080"
       - "8443:8443"
@@ -53,20 +45,11 @@ services:
       dockerfile: Dockerfile
     image: ol7_183:latest
     volumes:
-      - db-data:/u02
+      - /home/docker_user/volumes/ol7_183_con_u02/:/u02
     environment:
       - SYS_PASSWORD=SysPassword1
       - PDB_PASSWORD=PdbPassword1
       - APEX_EMAIL=me@example.com
       - APEX_PASSWORD=ApexPassword1
-    networks:
-      - backend
     ports:
       - "1521:1521"
-
-volumes:
-  db-data:
-  
-networks:
-  backend:
-    driver: bridge
