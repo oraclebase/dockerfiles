@@ -1,5 +1,7 @@
-# Handle shutdowns
-# docker stop --time=30 {container}
+echo "******************************************************************************"
+echo "Handle shutdowns." `date`
+echo "docker stop --time=30 {container}" `date`
+echo "******************************************************************************"
 function gracefulshutdown {
   ${CATALINA_HOME}/bin/shutdown.sh
 }
@@ -8,6 +10,9 @@ trap gracefulshutdown SIGINT
 trap gracefulshutdown SIGTERM
 trap gracefulshutdown SIGKILL
 
+echo "******************************************************************************"
+echo "Check DB is available." `date`
+echo "******************************************************************************"
 function check_db {
   CONNECTION=$1
   RETVAL=`/u01/sqlcl/bin/sql -silent ${CONNECTION} <<EOF
@@ -24,18 +29,18 @@ EOF`
   fi
 }
 
-# Wait for the DB to be available.
 CONNECTION="APEX_PUBLIC_USER/${APEX_PUBLIC_USER_PASSWORD}@//${DB_HOSTNAME}:${DB_PORT}/${DB_SERVICE}"
-echo "Check DB is available."
 check_db ${CONNECTION}
 while [ ${DB_OK} -eq 1 ]
 do
-  echo "DB not available yet. Waiting for 1 minute."
-  sleep 60
+  echo "DB not available yet. Waiting for 30 seconds."
+  sleep 30
   check_db ${CONNECTION}
 done
 
-# Prep the ORDS parameter file.
+echo "******************************************************************************"
+echo "Prepare the ORDS parameter file." `date`
+echo "******************************************************************************"
 cat > ${ORDS_HOME}/params/ords_params.properties <<EOF
 db.hostname=${DB_HOSTNAME}
 db.port=${DB_PORT}
@@ -62,13 +67,21 @@ sys.user=SYS
 sys.password=${SYS_PASSWORD}
 EOF
 
-# Configure ORDS. Safe to run on DB with existing config.
+echo "******************************************************************************"
+echo "Configure ORDS." `date`
+echo "******************************************************************************"
 cd ${ORDS_HOME}
 $JAVA_HOME/bin/java -jar ords.war configdir ${ORDS_CONF}
 $JAVA_HOME/bin/java -jar ords.war
+
+echo "******************************************************************************"
+echo "Install ORDS. Safe to run on DB with existing config." `date`
+echo "******************************************************************************"
 cp ords.war ${CATALINA_HOME}/webapps/
 
-# Configure HTTPS
+echo "******************************************************************************"
+echo "Configure HTTPS." `date`
+echo "******************************************************************************"
 if [ ! -f ${KEYSTORE_DIR}/keystore.jks ]; then
   mkdir -p ${KEYSTORE_DIR}
   cd ${KEYSTORE_DIR}
@@ -81,11 +94,15 @@ if [ ! -f ${KEYSTORE_DIR}/keystore.jks ]; then
   cp ${SCRIPTS_DIR}/server.xml ${CATALINA_HOME}/conf
 fi;
 
-# Start Tomcat
+echo "******************************************************************************"
+echo "Start Tomcat." `date`
+echo "******************************************************************************"
 ${CATALINA_HOME}/bin/startup.sh
 
-# Tail the catalina.out file as a background process
-# and wait on the process so script never ends.
+echo "******************************************************************************"
+echo "Tail the catalina.out file as a background process" `date`
+echo "and wait on the process so script never ends." `date`
+echo "******************************************************************************"
 tail -f ${CATALINA_HOME}/logs/catalina.out &
 bgPID=$!
 wait $bgPID
