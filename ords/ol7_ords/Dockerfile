@@ -40,7 +40,7 @@ LABEL maintainer="tim@oracle-base.com"
 
 # ------------------------------------------------------------------------------
 # Define fixed (build time) environment variables.
-ENV JAVA_SOFTWARE="openjdk-11_linux-x64_bin.tar.gz"                            \
+ENV JAVA_SOFTWARE="jdk-10.0.2_linux-x64_bin.tar.gz"                            \
     TOMCAT_SOFTWARE="apache-tomcat-9.0.12.tar.gz"                              \
     ORDS_SOFTWARE="ords-18.2.0.zip"                                            \
     APEX_SOFTWARE="apex_18.2_en.zip"                                           \ 
@@ -75,7 +75,7 @@ COPY scripts/* ${SCRIPTS_DIR}/
 # ------------------------------------------------------------------------------
 # Unpack all the software and remove the media.
 # No config done in the build phase.
-RUN yum -y install unzip tar gzip                                           && \
+RUN yum -y install unzip tar gzip freetype                                  && \
     yum -y update                                                           && \
     rm -Rf /var/cache/yum                                                   && \
     mkdir /u01/java                                                         && \
