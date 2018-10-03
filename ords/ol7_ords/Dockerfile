@@ -2,8 +2,8 @@
 # Dockerfile to build basic Oracle REST Data Services (ORDS) images
 # Based on the following:
 #   - Oracle Linux 7 - Slim
-#   - Java 10 :
-#       http://www.oracle.com/technetwork/java/javase/downloads/jdk10-downloads-4416644.html
+#   - Java 11 :
+#       http://jdk.java.net/11/
 #   - Tomcat 9.0.x :
 #       https://tomcat.apache.org/download-90.cgi
 #   - Oracle REST Data Services (ORDS) 18.x :
@@ -40,10 +40,10 @@ LABEL maintainer="tim@oracle-base.com"
 
 # ------------------------------------------------------------------------------
 # Define fixed (build time) environment variables.
-ENV JAVA_SOFTWARE="jdk-10.0.2_linux-x64_bin.tar.gz"                            \
-    TOMCAT_SOFTWARE="apache-tomcat-9.0.10.tar.gz"                              \
+ENV JAVA_SOFTWARE="openjdk-11_linux-x64_bin.tar.gz"                            \
+    TOMCAT_SOFTWARE="apache-tomcat-9.0.12.tar.gz"                              \
     ORDS_SOFTWARE="ords-18.2.0.zip"                                            \
-    APEX_SOFTWARE="apex_18.1_en.zip"                                           \ 
+    APEX_SOFTWARE="apex_18.2_en.zip"                                           \ 
     SQLCL_SOFTWARE="sqlcl-18.2.0.zip"                                          \
     SOFTWARE_DIR="/u01/software"                                               \
     SCRIPTS_DIR="/u01/scripts"                                                 \
@@ -55,7 +55,7 @@ ENV JAVA_SOFTWARE="jdk-10.0.2_linux-x64_bin.tar.gz"                            \
 
 # ------------------------------------------------------------------------------
 # Define config (runtime) environment variables.
-ENV DB_HOSTNAME="ol7-122.localdomain"                                          \
+ENV DB_HOSTNAME="ol7-183.localdomain"                                          \
     DB_PORT="1521"                                                             \
     DB_SERVICE="pdb1"                                                          \
     APEX_PUBLIC_USER_PASSWORD="ApexPassword1"                                  \
