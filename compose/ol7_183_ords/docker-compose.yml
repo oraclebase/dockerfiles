@@ -45,7 +45,7 @@ services:
       dockerfile: Dockerfile
     image: ol7_183:latest
     volumes:
-      - /home/docker_user/volumes/ol7_183_con_u02/:/u02
+      - db-data:/u02
     environment:
       - SYS_PASSWORD=SysPassword1
       - PDB_PASSWORD=PdbPassword1
@@ -53,3 +53,7 @@ services:
       - APEX_PASSWORD=ApexPassword1
     ports:
       - "1521:1521"
+
+volumes:
+  db-data:
+
