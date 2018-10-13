@@ -18,10 +18,10 @@ $ tree
 └── software
     ├── apache-tomcat-9.0.12.tar.gz
     ├── apex_18.2_en.zip
-    ├── openjdk-11_linux-x64_bin.tar.gz
-    ├── ords-18.2.0.zip
+    ├── jdk-8u181-linux-x64.tar.gz
+    ├── ords-18.3.0.270.1456.zip
     ├── put_software_here.txt
-    └── sqlcl-18.2.0.zip
+    └── sqlcl-18.3.0.259.2029.zip
 
 2 directories, 11 files
 $
