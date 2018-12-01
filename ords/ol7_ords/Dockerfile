@@ -40,8 +40,8 @@ LABEL maintainer="tim@oracle-base.com"
 
 # ------------------------------------------------------------------------------
 # Define fixed (build time) environment variables.
-ENV JAVA_SOFTWARE="jdk-8u181-linux-x64.tar.gz"                                 \
-    TOMCAT_SOFTWARE="apache-tomcat-9.0.12.tar.gz"                              \
+ENV JAVA_SOFTWARE="openjdk-11.0.1_linux-x64_bin.tar.gz"                        \
+    TOMCAT_SOFTWARE="apache-tomcat-9.0.13.tar.gz"                              \
     ORDS_SOFTWARE="ords-18.3.0.270.1456.zip"                                   \
     APEX_SOFTWARE="apex_18.2_en.zip"                                           \ 
     SQLCL_SOFTWARE="sqlcl-18.3.0.259.2029.zip"                                 \
@@ -75,7 +75,8 @@ COPY scripts/* ${SCRIPTS_DIR}/
 # ------------------------------------------------------------------------------
 # Unpack all the software and remove the media.
 # No config done in the build phase.
-RUN yum -y install unzip tar gzip freetype                                  && \
+# fontconfig : Added to support OpenJDK inside container.
+RUN yum -y install unzip tar gzip freetype fontconfig                       && \
     yum -y update                                                           && \
     rm -Rf /var/cache/yum                                                   && \
     mkdir /u01/java                                                         && \
