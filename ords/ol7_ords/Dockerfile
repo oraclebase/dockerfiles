@@ -19,6 +19,8 @@
 # docker build --squash -t ol7_ords:latest .
 #
 # docker run -dit --name ol7_ords_con -p 8080:8080 -p 8443:8443 --network=my_network -e DB_HOSTNAME=ol7_183_con ol7_ords:latest
+# Pure CATALINA_BASE on a persistent volume.
+# docker run -dit --name ol7_ords_con -p 8080:8080 -p 8443:8443 --network=my_network -e DB_HOSTNAME=ol7_183_con -v /home/docker_user/volumes/ol7_183_ords_tomcat:/u01/config/instance1 ol7_ords:latest
 #
 # docker logs --follow ol7_ords_con
 # docker exec -it ol7_ords_con bash
@@ -41,7 +43,7 @@ LABEL maintainer="tim@oracle-base.com"
 # ------------------------------------------------------------------------------
 # Define fixed (build time) environment variables.
 ENV JAVA_SOFTWARE="openjdk-11.0.1_linux-x64_bin.tar.gz"                        \
-    TOMCAT_SOFTWARE="apache-tomcat-9.0.13.tar.gz"                              \
+    TOMCAT_SOFTWARE="apache-tomcat-9.0.14.tar.gz"                              \
     ORDS_SOFTWARE="ords-18.3.0.270.1456.zip"                                   \
     APEX_SOFTWARE="apex_18.2_en.zip"                                           \ 
     SQLCL_SOFTWARE="sqlcl-18.3.0.259.2029.zip"                                 \
@@ -50,8 +52,9 @@ ENV JAVA_SOFTWARE="openjdk-11.0.1_linux-x64_bin.tar.gz"                        \
     KEYSTORE_DIR="/u01/keystore"                                               \
     ORDS_HOME="/u01/ords"                                                      \
     ORDS_CONF="/u01/ords/conf"                                                 \
-    JAVA_HOME="/u01/java"                                                      \
-    CATALINA_HOME="/u01/tomcat"
+    JAVA_HOME="/u01/java/latest"                                               \
+    CATALINA_HOME="/u01/tomcat/latest"                                         \
+    CATALINA_BASE="/u01/config/instance1" 
 
 # ------------------------------------------------------------------------------
 # Define config (runtime) environment variables.
@@ -65,7 +68,8 @@ ENV DB_HOSTNAME="ol7-183.localdomain"                                          \
     APEX_REST_PASSWORD="ApexPassword1"                                         \
     PUBLIC_PASSWORD="ApexPassword1"                                            \
     SYS_PASSWORD="SysPassword1"                                                \
-    KEYSTORE_PASSWORD="KeystorePassword1"
+    KEYSTORE_PASSWORD="KeystorePassword1"                                      \
+    APEX_IMAGES_REFRESH="true"
 
 # ------------------------------------------------------------------------------
 # Get all the files for the build.
@@ -75,46 +79,13 @@ COPY scripts/* ${SCRIPTS_DIR}/
 # ------------------------------------------------------------------------------
 # Unpack all the software and remove the media.
 # No config done in the build phase.
-# fontconfig : Added to support OpenJDK inside container.
-RUN yum -y install unzip tar gzip freetype fontconfig                       && \
-    yum -y update                                                           && \
-    rm -Rf /var/cache/yum                                                   && \
-    mkdir /u01/java                                                         && \
-    cd /u01/java                                                            && \
-    tar -xzf ${SOFTWARE_DIR}/${JAVA_SOFTWARE}                               && \
-    rm -f ${SOFTWARE_DIR}/${JAVA_SOFTWARE}                                  && \
-    TEMP_FILE=`ls`                                                          && \
-    mv ${TEMP_FILE}/* .                                                     && \
-    rmdir ${TEMP_FILE}                                                      && \
-    mkdir /u01/tomcat                                                       && \
-    cd /u01/tomcat                                                          && \
-    tar -xzf ${SOFTWARE_DIR}/${TOMCAT_SOFTWARE}                             && \
-    rm -f ${SOFTWARE_DIR}/${TOMCAT_SOFTWARE}                                && \
-    TEMP_FILE=`ls`                                                          && \
-    mv ${TEMP_FILE}/* .                                                     && \
-    rmdir ${TEMP_FILE}                                                      && \
-    mkdir -p ${ORDS_CONF}                                                   && \
-    cd ${ORDS_HOME}                                                         && \
-    unzip ${SOFTWARE_DIR}/${ORDS_SOFTWARE}                                  && \
-    rm -f ${SOFTWARE_DIR}/${ORDS_SOFTWARE}                                  && \
-    cd /u01                                                                 && \
-    unzip ${SOFTWARE_DIR}/${SQLCL_SOFTWARE}                                 && \
-    rm -f ${SOFTWARE_DIR}/${SQLCL_SOFTWARE}                                 && \
-    #mv /u01/*sqlcl* /u01/sqlcl                                             && \
-    cd ${SOFTWARE_DIR}                                                      && \
-    unzip ${SOFTWARE_DIR}/${APEX_SOFTWARE}                                  && \
-    rm -f ${SOFTWARE_DIR}/${APEX_SOFTWARE}                                  && \
-    rm -Rf ${CATALINA_HOME}/webapps/*                                       && \
-    mkdir -p ${CATALINA_HOME}/webapps/i/                                    && \
-    cp -R ${SOFTWARE_DIR}/apex/images/* ${CATALINA_HOME}/webapps/i/         && \
-    rm -Rf ${SOFTWARE_DIR}/apex                                             && \
-    useradd tomcat                                                          && \
-    chmod u+x ${SCRIPTS_DIR}/*.sh                                           && \
-    chown -R tomcat.tomcat /u01
+RUN sh ${SCRIPTS_DIR}/install_os_packages.sh                                && \
+    sh ${SCRIPTS_DIR}/ords_software_installation.sh
 
 # Perform the following actions as the tomcat user
 USER tomcat
 
+VOLUME [${CATALINA_BASE}]
 EXPOSE 8080 8443
 HEALTHCHECK --interval=1m --start-period=1m \
    CMD ${SCRIPTS_DIR}/healthcheck.sh >/dev/null || exit 1

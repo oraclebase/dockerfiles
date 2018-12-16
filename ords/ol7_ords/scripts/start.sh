@@ -39,6 +39,36 @@ do
 done
 
 echo "******************************************************************************"
+echo "Prepare CATALINA_BASE." `date`
+echo "******************************************************************************"
+if [ ! -d ${CATALINA_BASE}/conf ]; then
+  echo "******************************************************************************"
+  echo "New CATALINA_BASE location." `date`
+  echo "******************************************************************************"
+  cp -r ${CATALINA_HOME}/conf $CATALINA_BASE
+  cp -r ${CATALINA_HOME}/logs $CATALINA_BASE
+  cp -r ${CATALINA_HOME}/temp $CATALINA_BASE
+  cp -r ${CATALINA_HOME}/webapps $CATALINA_BASE
+  cp -r ${CATALINA_HOME}/work $CATALINA_BASE
+fi
+
+if [ ! -d ${CATALINA_BASE}/webapps/i ]; then
+  echo "******************************************************************************"
+  echo "First time APEX images." `date`
+  echo "******************************************************************************"
+  mkdir -p ${CATALINA_BASE}/webapps/i/
+  cp -R ${SOFTWARE_DIR}/images/* ${CATALINA_BASE}/webapps/i/
+  APEX_IMAGES_REFRESH="false"
+fi
+
+if [ "${APEX_IMAGES_REFRESH}" = "true" ]; then
+  echo "******************************************************************************"
+  echo "Overwrite APEX images." `date`
+  echo "******************************************************************************"
+  cp -R ${SOFTWARE_DIR}/images/* ${CATALINA_BASE}/webapps/i/
+fi
+
+echo "******************************************************************************"
 echo "Prepare the ORDS parameter file." `date`
 echo "******************************************************************************"
 cat > ${ORDS_HOME}/params/ords_params.properties <<EOF
@@ -77,7 +107,7 @@ $JAVA_HOME/bin/java -jar ords.war
 echo "******************************************************************************"
 echo "Install ORDS. Safe to run on DB with existing config." `date`
 echo "******************************************************************************"
-cp ords.war ${CATALINA_HOME}/webapps/
+cp ords.war ${CATALINA_BASE}/webapps/
 
 echo "******************************************************************************"
 echo "Configure HTTPS." `date`
@@ -91,7 +121,7 @@ if [ ! -f ${KEYSTORE_DIR}/keystore.jks ]; then
 
   sed -i -e "s|###KEYSTORE_DIR###|${KEYSTORE_DIR}|g" ${SCRIPTS_DIR}/server.xml
   sed -i -e "s|###KEYSTORE_PASSWORD###|${KEYSTORE_PASSWORD}|g" ${SCRIPTS_DIR}/server.xml
-  cp ${SCRIPTS_DIR}/server.xml ${CATALINA_HOME}/conf
+  cp ${SCRIPTS_DIR}/server.xml ${CATALINA_BASE}/conf
 fi;
 
 echo "******************************************************************************"
@@ -103,6 +133,6 @@ echo "**************************************************************************
 echo "Tail the catalina.out file as a background process" `date`
 echo "and wait on the process so script never ends." `date`
 echo "******************************************************************************"
-tail -f ${CATALINA_HOME}/logs/catalina.out &
+tail -f ${CATALINA_BASE}/logs/catalina.out &
 bgPID=$!
 wait $bgPID
