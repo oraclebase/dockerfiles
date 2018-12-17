@@ -45,11 +45,11 @@ if [ ! -d ${CATALINA_BASE}/conf ]; then
   echo "******************************************************************************"
   echo "New CATALINA_BASE location." `date`
   echo "******************************************************************************"
-  cp -r ${CATALINA_HOME}/conf $CATALINA_BASE
-  cp -r ${CATALINA_HOME}/logs $CATALINA_BASE
-  cp -r ${CATALINA_HOME}/temp $CATALINA_BASE
-  cp -r ${CATALINA_HOME}/webapps $CATALINA_BASE
-  cp -r ${CATALINA_HOME}/work $CATALINA_BASE
+  cp -r ${CATALINA_HOME}/conf ${CATALINA_BASE}
+  cp -r ${CATALINA_HOME}/logs ${CATALINA_BASE}
+  cp -r ${CATALINA_HOME}/temp ${CATALINA_BASE}
+  cp -r ${CATALINA_HOME}/webapps ${CATALINA_BASE}
+  cp -r ${CATALINA_HOME}/work ${CATALINA_BASE}
 fi
 
 if [ ! -d ${CATALINA_BASE}/webapps/i ]; then
@@ -121,6 +121,7 @@ if [ ! -f ${KEYSTORE_DIR}/keystore.jks ]; then
 
   sed -i -e "s|###KEYSTORE_DIR###|${KEYSTORE_DIR}|g" ${SCRIPTS_DIR}/server.xml
   sed -i -e "s|###KEYSTORE_PASSWORD###|${KEYSTORE_PASSWORD}|g" ${SCRIPTS_DIR}/server.xml
+  sed -i -e "s|###PROXY_IPS###|${PROXY_IPS}|g" ${SCRIPTS_DIR}/server.xml
   cp ${SCRIPTS_DIR}/server.xml ${CATALINA_BASE}/conf
 fi;
 

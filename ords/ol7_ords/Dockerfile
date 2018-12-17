@@ -54,7 +54,7 @@ ENV JAVA_SOFTWARE="openjdk-11.0.1_linux-x64_bin.tar.gz"                        \
     ORDS_CONF="/u01/ords/conf"                                                 \
     JAVA_HOME="/u01/java/latest"                                               \
     CATALINA_HOME="/u01/tomcat/latest"                                         \
-    CATALINA_BASE="/u01/config/instance1" 
+    CATALINA_BASE="/u01/config/instance1"
 
 # ------------------------------------------------------------------------------
 # Define config (runtime) environment variables.
@@ -69,7 +69,8 @@ ENV DB_HOSTNAME="ol7-183.localdomain"                                          \
     PUBLIC_PASSWORD="ApexPassword1"                                            \
     SYS_PASSWORD="SysPassword1"                                                \
     KEYSTORE_PASSWORD="KeystorePassword1"                                      \
-    APEX_IMAGES_REFRESH="true"
+    APEX_IMAGES_REFRESH="true"                                                 \
+    PROXY_IPS="123.123.123.123\|123.123.123.124"
 
 # ------------------------------------------------------------------------------
 # Get all the files for the build.
