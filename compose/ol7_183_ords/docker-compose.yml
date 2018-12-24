@@ -59,6 +59,16 @@ services:
     ports:
       - "1521:1521"
 
-#volumes:
+  # Portainer
+  portainerservice:
+    image: portainer/portainer
+    volumes:
+      - portainer_data:/data
+      - /var/run/docker.sock:/var/run/docker.sock
+    ports:
+      - "9000:9000"
+
+volumes:
 #  db-data:
-  
+  portainer_data:
+
