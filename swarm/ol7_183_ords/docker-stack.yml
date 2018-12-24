@@ -1,0 +1,113 @@
+version: '3'
+
+# ------------------------------------------------------------------------------
+# These images must be built in advance.
+# cd ~/dockerfiles/database/ol7_183
+# docker build -t ol7_183:latest .
+# 
+# cd ~/dockerfiles/ords/ol7_ords
+# docker build -t ol7_ords:latest .
+#
+# Start swarm and deploy stack.
+# docker swarm init
+# cd ~/dockerfiles/swarm/ol7_183_ords
+# docker stack deploy -c ./docker-stack.yml ords-stack
+# 
+# Check stack and services.
+# docker stack ls
+# docker stack ps ords-stack
+# docker ps -a
+# docker service ls
+# 
+# Scale specified service.
+# docker service scale ords-stack_ords=5
+# docker service scale ords-stack_ords=2
+#
+# Remove stack and check stack status.
+# docker stack rm ords-stack
+# docker stack ps ords-stack
+# 
+# Leave swarm. The "-f" option indicates the swarm manager itself should leave.
+# docker swarm leave -f
+# ------------------------------------------------------------------------------
+
+services:
+  # ORDS service
+  ords:
+    image: ol7_ords:latest
+    deploy:
+      replicas: 2
+      restart_policy:
+        condition: on-failure
+      resources:
+        limits:
+          cpus: "1"
+    ports:
+      - "8080:8080"
+      - "8443:8443"
+    networks:
+      - ordsnet
+    # Comment out volume if you don't care about a persistent CATALINA_BASE.
+    volumes:
+      - /home/docker_user/volumes/ol7_183_ords_tomcat:/u01/config/instance1
+    environment:
+      - DB_HOSTNAME=db
+      - DB_PORT=1521
+      - DB_SERVICE=pdb1
+      - APEX_PUBLIC_USER_PASSWORD=ApexPassword1
+      - APEX_TABLESPACE=APEX
+      - TEMP_TABLESPACE=TEMP
+      - APEX_LISTENER_PASSWORD=ApexPassword1
+      - APEX_REST_PASSWORD=ApexPassword1
+      - PUBLIC_PASSWORD=ApexPassword1
+      - SYS_PASSWORD=SysPassword1
+      - KEYSTORE_PASSWORD=KeystorePassword1
+
+  # Oracle Database service
+  db:
+    image: ol7_183:latest
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+      resources:
+        limits:
+          cpus: "2"
+    ports:
+      - "1521:1521"
+    networks:
+      - ordsnet
+    # Use persistent volume of your choice.
+    volumes:
+      #- db_data:/u02
+      - /home/docker_user/volumes/ol7_183_ords_db:/u02
+    environment:
+      - SYS_PASSWORD=SysPassword1
+      - PDB_PASSWORD=PdbPassword1
+      - APEX_EMAIL=me@example.com
+      - APEX_PASSWORD=ApexPassword1
+
+  # Portainer
+  portainer:
+    image: portainer/portainer
+    deploy:
+      placement:
+        constraints: [node.role == manager]
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+      resources:
+        limits:
+          cpus: "1"
+    ports:
+      - "9000:9000"
+    volumes:
+      - portainer_data:/data
+      - /var/run/docker.sock:/var/run/docker.sock
+
+volumes:
+  #db_data:
+  portainer_data:
+
+networks:
+  ordsnet:
