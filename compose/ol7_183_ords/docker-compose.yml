@@ -15,18 +15,18 @@ version: '3'
 
 services:
   # ORDS service
-  ordsservice:
+  ords:
     build:
       context: ../../ords/ol7_ords/
       dockerfile: Dockerfile
     depends_on:
-      - dbservice
+      - db
     image: ol7_ords:latest
     # Comment out volume if you don't care about a persistent CATALINA_BASE.
     volumes:
       - /home/docker_user/volumes/ol7_183_ords_tomcat:/u01/config/instance1
     environment:
-      - DB_HOSTNAME=dbservice
+      - DB_HOSTNAME=db
       - DB_PORT=1521
       - DB_SERVICE=pdb1
       - APEX_PUBLIC_USER_PASSWORD=ApexPassword1
@@ -40,17 +40,19 @@ services:
     ports:
       - "8080:8080"
       - "8443:8443"
+    networks:
+      - ordsnet
     restart: unless-stopped
 
   # Oracle Database service
-  dbservice:
+  db:
     build:
       context: ../../database/ol7_183/
       dockerfile: Dockerfile
     image: ol7_183:latest
     # Use persistent volume of your choice.
     volumes:
-      #- db-data:/u02
+      #- db_data:/u02
       - /home/docker_user/volumes/ol7_183_ords_db:/u02
     environment:
       - SYS_PASSWORD=SysPassword1
@@ -59,10 +61,12 @@ services:
       - APEX_PASSWORD=ApexPassword1
     ports:
       - "1521:1521"
+    networks:
+      - ordsnet
     restart: unless-stopped
 
   # Portainer
-  portainerservice:
+  portainer:
     image: portainer/portainer
     volumes:
       - portainer_data:/data
@@ -72,6 +76,8 @@ services:
     restart: unless-stopped
 
 volumes:
-#  db-data:
+#  db_data:
   portainer_data:
 
+networks:
+  ordsnet:
