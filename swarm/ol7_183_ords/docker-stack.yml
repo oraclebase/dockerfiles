@@ -34,6 +34,8 @@ version: '3'
 services:
   # ORDS service
   ords:
+    depends_on:
+      - db
     image: ol7_ords:latest
     deploy:
       replicas: 2
@@ -67,6 +69,8 @@ services:
   db:
     image: ol7_183:latest
     deploy:
+      placement:
+        constraints: [node.role == manager]
       replicas: 1
       restart_policy:
         condition: on-failure
