@@ -16,7 +16,7 @@ $ tree
 │   └── start.sh
 └── software
     ├── linuxx64_12201_database.zip
-    ├── preupgrade_12201_cbuild_011_lf.zip
+    ├── preupgrade_12201_cbuild_20_lf.zip
     └── put_software_here.txt
 
 2 directories, 7 files
