@@ -93,7 +93,6 @@ RUN groupadd -g 500 dba                                                     && \
     chmod 775 /u02                                                          && \
     chmod g+s /u02
 
-
 # Perform the following actions as the oracle user
 USER oracle
 
