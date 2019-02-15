@@ -78,7 +78,8 @@ COPY scripts/* ${SCRIPTS_DIR}/
 #
 RUN groupadd -g 500 dba                                                     && \
     groupadd -g 501 oinstall                                                && \
-    useradd -d /home/oracle -g dba -G oinstall,dba -m -s /bin/bash oracle   && \
+    groupadd -g 1042 docker_fg                                              && \
+    useradd -d /home/oracle -g dba -G oinstall,dba,docker_fg -m -s /bin/bash oracle   && \
     yum -y install unzip tar gzip                                           && \
     yum -y update                                                           && \
     yum -y install oracle-rdbms-server-12cR1-preinstall                     && \
@@ -86,7 +87,10 @@ RUN groupadd -g 500 dba                                                     && \
     mkdir -p ${ORACLE_HOME}                                                 && \
     mkdir -p /u02/oradata                                                   && \
     chown -R oracle.oinstall /u01 /u02                                      && \
-    chmod u+x ${SCRIPTS_DIR}/*.sh
+    chmod u+x ${SCRIPTS_DIR}/*.sh                                           && \
+    chown oracle:docker_fg /u02                                             && \
+    chmod 775 /u02                                                          && \
+    chmod g+s /u02
 
 # Perform the following actions as the oracle user
 USER oracle
