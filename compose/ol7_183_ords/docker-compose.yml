@@ -24,7 +24,7 @@ services:
     image: ol7_ords:latest
     # Comment out volume if you don't care about a persistent CATALINA_BASE.
     volumes:
-      - /home/docker_user/volumes/ol7_183_ords_tomcat:/u01/config/instance1
+      - /u01/volumes/ol7_183_ords_tomcat:/u01/config/instance1
     environment:
       - DB_HOSTNAME=db
       - DB_PORT=1521
@@ -53,7 +53,7 @@ services:
     # Use persistent volume of your choice.
     volumes:
       #- db_data:/u02
-      - /home/docker_user/volumes/ol7_183_ords_db:/u02
+      - /u01/volumes/ol7_183_ords_db:/u02
     environment:
       - SYS_PASSWORD=SysPassword1
       - PDB_PASSWORD=PdbPassword1
