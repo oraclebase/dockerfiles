@@ -87,7 +87,7 @@ RUN groupadd -g 500 dba                                                     && \
     rm -Rf /var/cache/yum                                                   && \
     mkdir -p ${ORACLE_HOME}                                                 && \
     mkdir -p /u02/oradata                                                   && \
-    chown -R oracle.oinstall /u01 /u02                                      && \
+    chown -R oracle.oinstall /u01                                           && \
     chmod u+x ${SCRIPTS_DIR}/*.sh                                           && \
     chown oracle:docker_fg /u02                                             && \
     chmod 775 /u02                                                          && \
