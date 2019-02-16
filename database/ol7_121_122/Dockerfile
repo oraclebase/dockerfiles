@@ -13,7 +13,7 @@
 # docker build --squash -t ol7_121_122:latest .
 #
 # Persistent storage.
-# docker run -dit --name ol7_121_122_con -p 1521:1521 -p 5500:5500 --shm-size="1G" -v /home/docker_user/volumes/ol7_121_con_u02/:/u02 ol7_121_122:latest
+# docker run -dit --name ol7_121_122_con -p 1521:1521 -p 5500:5500 --shm-size="1G" -v /u01/volumes/ol7_121_con_u02/:/u02 ol7_121_122:latest
 #
 # docker logs --follow ol7_121_122_con
 # docker exec -it ol7_121_122_con bash
@@ -80,7 +80,7 @@ USER oracle
 
 # Unzip software
 RUN cd ${SOFTWARE_DIR}                                                      && \
-    unzip "${DB_SOFTWARE}"                                                  && \
+    unzip -oq "${DB_SOFTWARE}"                                              && \
     rm ${DB_SOFTWARE}
 
 # Do software-only installation
@@ -107,7 +107,7 @@ RUN ${SOFTWARE_DIR}/database/runInstaller -ignoreSysPrereqs -ignorePrereq      \
 RUN rm -Rf ${SOFTWARE_DIR}/database                                         && \
     cd ${ORACLE_HOME_2}/rdbms/admin/                                        && \
     mv ${SOFTWARE_DIR}/${PREUPGRADE_SOFTWARE} ./${PREUPGRADE_SOFTWARE}      && \
-    unzip -o ${PREUPGRADE_SOFTWARE}
+    unzip -oq ${PREUPGRADE_SOFTWARE}
 
 # Run the root scripts
 USER root
