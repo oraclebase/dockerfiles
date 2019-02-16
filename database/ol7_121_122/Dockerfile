@@ -41,7 +41,6 @@ ENV ORACLE_BASE=/u01/app/oracle                                                \
     ORA_INVENTORY=/u01/app/oraInventory                                        \
     SOFTWARE_DIR=/u01/software                                                 \
     DB_SOFTWARE="linuxx64_12201_database.zip"                                  \
-    PREUPGRADE_SOFTWARE="preupgrade_12201_cbuild_20_lf.zip"                   \
     ORACLE_PASSWORD="oracle"                                                   \
     SCRIPTS_DIR=/u01/scripts                                                   \
     ORAENV_ASK=NO
@@ -63,11 +62,6 @@ COPY scripts/* ${SCRIPTS_DIR}/
 # ------------------------------------------------------------------------------
 # Unpack all the software and remove the media.
 # No config done in the build phase.
-# 
-# Manually create user and group as preinstall package creates the with
-# high IDs, which causes issues. Note 2 on link below.
-# https://docs.docker.com/engine/userguide/eng-image/dockerfile_best-practices/#user
-#
 USER root
 
 RUN mkdir -p ${ORACLE_HOME_2}                                               && \
@@ -107,10 +101,7 @@ RUN ${SOFTWARE_DIR}/database/runInstaller -ignoreSysPrereqs -ignorePrereq      \
     DECLINE_SECURITY_UPDATES=true
 
 # Remove source software and put the latest "preupgrade.jar" file in place.
-RUN rm -Rf ${SOFTWARE_DIR}/database                                         && \
-    cd ${ORACLE_HOME_2}/rdbms/admin/                                        && \
-    mv ${SOFTWARE_DIR}/${PREUPGRADE_SOFTWARE} ./${PREUPGRADE_SOFTWARE}      && \
-    unzip -oq ${PREUPGRADE_SOFTWARE}
+RUN rm -Rf ${SOFTWARE_DIR}/database
 
 # Run the root scripts
 USER root
