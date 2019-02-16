@@ -95,10 +95,14 @@ echo "**************************************************************************
 sqlplus / as sysdba <<EOF
 purge dba_recyclebin;
 exec dbms_stats.gather_dictionary_stats;
+drop package SYS.DBMS_PREUP;
+@?/rdbms/admin/utluppkg.sql
 @?/rdbms/admin/utlrp.sql
 alter session set container = ${PDB_NAME};
 purge dba_recyclebin;
 exec dbms_stats.gather_dictionary_stats;
+drop package SYS.DBMS_PREUP;
+@?/rdbms/admin/utluppkg.sql
 @?/rdbms/admin/utlrp.sql
 EXIT;
 EOF
@@ -116,7 +120,7 @@ echo "There shouldn't be any fixups, but run them just in case."
 echo "**************************************************************************"
 sqlplus / as sysdba <<EOF
 alter session set container=${PDB_NAME};
-@/u01/app/oracle/cfgtoollogs/c/preupgrade/preupgrade_fixups.sql
+@/u01/app/oracle/cfgtoollogs/${ORACLE_SID}/preupgrade/preupgrade_fixups.sql
 EXIT;
 EOF
 
