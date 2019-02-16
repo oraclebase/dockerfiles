@@ -72,8 +72,11 @@ USER root
 
 RUN mkdir -p ${ORACLE_HOME_2}                                               && \
     mkdir -p /u02/oradata                                                   && \
-    chown -R oracle.oinstall /u01 /u02                                      && \
-    chmod u+x ${SCRIPTS_DIR}/*.sh
+    chown -R oracle.oinstall /u01                                           && \
+    chmod u+x ${SCRIPTS_DIR}/*.sh                                           && \
+    chown oracle:docker_fg /u02                                             && \
+    chmod 775 /u02                                                          && \
+    chmod g+s /u02
 
 # Perform the following actions as the oracle user
 USER oracle
