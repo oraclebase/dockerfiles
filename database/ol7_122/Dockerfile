@@ -60,6 +60,7 @@ ENV ORACLE_SID=cdb1                                                            \
     SYS_PASSWORD="SysPassword1"                                                \
     PDB_NAME="pdb1"                                                            \
     PDB_PASSWORD="PdbPassword1"                                                \
+    INSTALL_APEX="true"                                                        \
     APEX_EMAIL="me@example.com"                                                \
     APEX_PASSWORD="ApexPassword1"
 
@@ -97,7 +98,7 @@ USER oracle
 
 # Unzip software
 RUN cd ${SOFTWARE_DIR}                                                      && \
-    unzip ${DB_SOFTWARE}                                                    && \
+    unzip -oq ${DB_SOFTWARE}                                                && \
     rm ${DB_SOFTWARE}
 
 # Do software-only installation
@@ -124,7 +125,7 @@ RUN ${SOFTWARE_DIR}/database/runInstaller -ignoreSysPrereqs -ignorePrereq      \
 # Replace default APEX software with user-provided version.
 RUN rm -Rf ${SOFTWARE_DIR}/database                                         && \
     rm -Rf ${ORACLE_HOME}/apex                                              && \
-    unzip -d ${ORACLE_HOME} ${SOFTWARE_DIR}/${APEX_SOFTWARE}                && \
+    unzip -oqd ${ORACLE_HOME} ${SOFTWARE_DIR}/${APEX_SOFTWARE}              && \
     rm ${SOFTWARE_DIR}/${APEX_SOFTWARE}
 
 # Run the root scripts
