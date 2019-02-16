@@ -16,10 +16,10 @@
 # docker run -dit --name ol7_183_con -p 1521:1521 -p 5500:5500 --shm-size="1G" ol7_183:latest
 #
 # Persistent storage.
-# docker run -dit --name ol7_183_con -p 1521:1521 -p 5500:5500 --shm-size="1G" -v /home/docker_user/volumes/ol7_183_con_u02/:/u02 ol7_183:latest
+# docker run -dit --name ol7_183_con -p 1521:1521 -p 5500:5500 --shm-size="1G" -v /u01/volumes/ol7_183_con_u02/:/u02 ol7_183:latest
 #
 # Persistent storage and part of Docker network called "my_network".
-# docker run -dit --name ol7_183_con -p 1521:1521 -p 5500:5500 --shm-size="1G" --network=my_network -v /home/docker_user/volumes/ol7_183_con_u02/:/u02 ol7_183:latest
+# docker run -dit --name ol7_183_con -p 1521:1521 -p 5500:5500 --shm-size="1G" --network=my_network -v /u01/volumes/ol7_183_con_u02/:/u02 ol7_183:latest
 #
 # docker logs --follow ol7_183_con
 # docker exec -it ol7_183_con bash
