@@ -3,7 +3,7 @@ echo "ORDS Software Installation." `date`
 echo "******************************************************************************"
 echo "Create docker_fg group and tomcat user."
 groupadd -g 1042 docker_fg
-useradd tomcat -G docker_fg
+useradd tomcat -u 501 -G docker_fg
 
 echo "Java setup."
 mkdir -p /u01/java
