@@ -24,13 +24,13 @@ ln -s ${TEMP_FILE} latest
 echo "ORDS setup."
 mkdir -p ${ORDS_CONF}
 cd ${ORDS_HOME}
-unzip ${SOFTWARE_DIR}/${ORDS_SOFTWARE}
+unzip -oq ${SOFTWARE_DIR}/${ORDS_SOFTWARE}
 rm -f ${SOFTWARE_DIR}/${ORDS_SOFTWARE}
 mkdir -p ${ORDS_CONF}
 
 echo "SQLcl setup."
 cd /u01
-unzip ${SOFTWARE_DIR}/${SQLCL_SOFTWARE}
+unzip -oq ${SOFTWARE_DIR}/${SQLCL_SOFTWARE}
 rm -f ${SOFTWARE_DIR}/${SQLCL_SOFTWARE}
 
 echo "APEX Images."
