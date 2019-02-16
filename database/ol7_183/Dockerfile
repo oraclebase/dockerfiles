@@ -80,7 +80,7 @@ COPY scripts/* ${SCRIPTS_DIR}/
 RUN groupadd -g 500 dba                                                     && \
     groupadd -g 501 oinstall                                                && \
     groupadd -g 1042 docker_fg                                              && \
-    useradd -d /home/oracle -g dba -G oinstall,dba,docker_fg -m -s /bin/bash oracle   && \
+    useradd -d /home/oracle -u 500 -g dba -G oinstall,dba,docker_fg -m -s /bin/bash oracle   && \
     yum -y install unzip tar gzip                                           && \
     yum -y update                                                           && \
     yum -y install oracle-database-preinstall-18c                           && \
