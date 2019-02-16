@@ -1,5 +1,7 @@
-# Handle shutdowns
-# docker stop --time=30 {container}
+echo "******************************************************************************"
+echo "Handle shutdowns." `date`
+echo "docker stop --time=30 {container}" `date`
+echo "******************************************************************************"
 function gracefulshutdown {
   dbshut $ORACLE_HOME
 }
@@ -8,24 +10,42 @@ trap gracefulshutdown SIGINT
 trap gracefulshutdown SIGTERM
 trap gracefulshutdown SIGKILL
 
-# Fixes the config using the contents of the volume.
-# Necessary when using persistent volume as "rm" and "run" will reset the config
-# under the ORACLE_HOME.
+echo "******************************************************************************"
+echo "Define fixConfig function." `date`
+echo "Fixes the config using the contents of the volume." `date`
+echo "Necessary when using persistent volume as "rm" and "run" will reset the config" `date`
+echo "under the ORACLE_HOME." `date`
+echo "******************************************************************************"
 function fixConfig {
-  cp -f /u02/config/oratab /etc/oratab 
-  ln -s /u02/config/${ORACLE_SID}/orapw${ORACLE_SID} ${ORACLE_HOME}/dbs/orapw${ORACLE_SID}
-  ln -s /u02/config/${ORACLE_SID}/spfile${ORACLE_SID}.ora ${ORACLE_HOME}/dbs/spfile${ORACLE_SID}.ora
-  ln -s /u02/config/${ORACLE_SID}/admin ${ORACLE_BASE}/admin
-  ln -s /u02/config/${ORACLE_SID}/fast_recovery_area ${ORACLE_BASE}/fast_recovery_area
-  rm -Rf ${ORACLE_BASE}/diag
-  ln -s /u02/config/${ORACLE_SID}/diag ${ORACLE_BASE}/diag
+  cp -f /u02/config/oratab /etc/oratab
+  if [ ! -L ${ORACLE_HOME}/dbs/orapw${ORACLE_SID} ]; then
+    ln -s /u02/config/${ORACLE_SID}/orapw${ORACLE_SID} ${ORACLE_HOME}/dbs/orapw${ORACLE_SID}
+  fi
+  if [ ! -L ${ORACLE_HOME}/dbs/spfile${ORACLE_SID}.ora ]; then
+    ln -s /u02/config/${ORACLE_SID}/spfile${ORACLE_SID}.ora ${ORACLE_HOME}/dbs/spfile${ORACLE_SID}.ora
+  fi
+  if [ ! -L ${ORACLE_BASE}/admin ]; then
+    ln -s /u02/config/${ORACLE_SID}/admin ${ORACLE_BASE}/admin
+  fi
+  if [ ! -L ${ORACLE_BASE}/fast_recovery_area ]; then
+    ln -s /u02/config/${ORACLE_SID}/fast_recovery_area ${ORACLE_BASE}/fast_recovery_area
+  fi
+  if [ ! -L ${ORACLE_BASE}/diag ]; then
+    rm -Rf ${ORACLE_BASE}/diag
+    ln -s /u02/config/${ORACLE_SID}/diag ${ORACLE_BASE}/diag
+  fi
 }
 
-echo "**************************************************************************"
-echo "Create a listener.ora file if it doesn't already exist."
-echo "**************************************************************************"
+echo "******************************************************************************"
+echo "Create networking files if they don't already exist." `date`
+echo "******************************************************************************"
 if [ ! -f ${ORACLE_HOME}/network/admin/listener.ora ]; then
-echo "LISTENER = 
+  echo "******************************************************************************"
+  echo "First start, so create networking files." `date`
+  echo "******************************************************************************"
+
+  cat > ${ORACLE_HOME}/network/admin/listener.ora <<EOF
+LISTENER = 
 (DESCRIPTION_LIST = 
   (DESCRIPTION = 
     (ADDRESS = (PROTOCOL = IPC)(KEY = EXTPROC1)) 
@@ -33,7 +53,34 @@ echo "LISTENER =
   ) 
 ) 
 USE_SID_AS_SERVICE_listener=on
-" > ${ORACLE_HOME}/network/admin/listener.ora
+INBOUND_CONNECT_TIMEOUT_LISTENER=400
+EOF
+
+  cat > ${ORACLE_HOME}/network/admin/tnsnames.ora <<EOF
+LISTENER = (ADDRESS = (PROTOCOL = TCP)(HOST = 0.0.0.0)(PORT = 1521))
+
+${ORACLE_SID}= 
+(DESCRIPTION = 
+  (ADDRESS = (PROTOCOL = TCP)(HOST = 0.0.0.0)(PORT = 1521))
+  (CONNECT_DATA =
+    (SERVER = DEDICATED)
+    (SERVICE_NAME = ${ORACLE_SID})
+  )
+)
+
+${PDB_NAME}= 
+(DESCRIPTION = 
+  (ADDRESS = (PROTOCOL = TCP)(HOST = 0.0.0.0)(PORT = 1521))
+  (CONNECT_DATA =
+    (SERVER = DEDICATED)
+    (SERVICE_NAME = ${PDB_NAME})
+  )
+)
+EOF
+
+  cat > ${ORACLE_HOME}/network/admin/sqlnet.ora <<EOF
+SQLNET.INBOUND_CONNECT_TIMEOUT=400
+EOF
 fi
 
 echo "**************************************************************************"
