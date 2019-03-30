@@ -15,7 +15,7 @@ $ tree
 │   ├── healthcheck.sh
 │   └── start.sh
 └── software
-    ├── apex_18.2_en.zip
+    ├── apex_19.1_en.zip
     ├── put_software_here.txt
     └── V981623-01.zip
 
