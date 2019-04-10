@@ -6,11 +6,11 @@
 #       http://jdk.java.net/12/
 #   - Tomcat 9.0.x :
 #       https://tomcat.apache.org/download-90.cgi
-#   - Oracle REST Data Services (ORDS) 18.x :
+#   - Oracle REST Data Services (ORDS) 19.x :
 #       http://www.oracle.com/technetwork/developer-tools/rest-data-services/downloads/index.html
-#   - Oracle Application Express (APEX) 18.x :
+#   - Oracle Application Express (APEX) 19.x :
 #       http://www.oracle.com/technetwork/developer-tools/apex/downloads/index.html
-#   - Oracle SQLcl 18.x :
+#   - Oracle SQLcl 19.x :
 #       http://www.oracle.com/technetwork/developer-tools/sqlcl/downloads/index.html
 #
 # Example build and run. Assumes Docker network called "my_network" to connect to DB.
@@ -44,9 +44,9 @@ LABEL maintainer="tim@oracle-base.com"
 # Define fixed (build time) environment variables.
 ENV JAVA_SOFTWARE="openjdk-12_linux-x64_bin.tar.gz"                            \
     TOMCAT_SOFTWARE="apache-tomcat-9.0.17.tar.gz"                              \
-    ORDS_SOFTWARE="ords-18.4.0.354.1002.zip"                                   \
+    ORDS_SOFTWARE="ords-19.1.0.092.1545.zip"                                   \
     APEX_SOFTWARE="apex_19.1_en.zip"                                           \ 
-    SQLCL_SOFTWARE="sqlcl-18.4.0.007.1818.zip"                                 \
+    SQLCL_SOFTWARE="sqlcl-19.1.0.094.1619.zip"                                 \
     SOFTWARE_DIR="/u01/software"                                               \
     SCRIPTS_DIR="/u01/scripts"                                                 \
     KEYSTORE_DIR="/u01/keystore"                                               \
