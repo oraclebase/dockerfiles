@@ -83,7 +83,7 @@ RUN groupadd -g 500 dba                                                     && \
     useradd -d /home/oracle -u 500 -g dba -G oinstall,dba,docker_fg -m -s /bin/bash oracle   && \
     yum -y install unzip tar gzip                                           && \
     yum -y update                                                           && \
-    yum -y install oracle-database-preinstall-18c                           && \
+    yum -y install oracle-database-preinstall-19c                           && \
     rm -Rf /var/cache/yum                                                   && \
     mkdir -p ${ORACLE_HOME}                                                 && \
     mkdir -p /u02/oradata                                                   && \
