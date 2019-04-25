@@ -16,8 +16,8 @@ $ tree
 │   └── start.sh
 └── software
     ├── apex_19.1_en.zip
-    ├── put_software_here.txt
-    └── V981623-01.zip
+    ├── LINUX.X64_193000_db_home.zip
+    └── put_software_here.txt
 
 $
 ```
