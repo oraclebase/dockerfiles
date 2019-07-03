@@ -1,6 +1,6 @@
 # Docker Swarm Stack Definition for Oracle 19c and ORDS
 
-A simple example of a Docker Swarm stack definiton, baseed on the 18c Database and Oracle REST Data Services (ORDS) image builds defined in this repository.
+A simple example of a Docker Swarm stack definition, based on the 19c Database and Oracle REST Data Services (ORDS) image builds defined in this repository.
 
 The following article provides a description of this stack definition.
 
