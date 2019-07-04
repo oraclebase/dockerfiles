@@ -1,6 +1,6 @@
 # Docker Compose Stack Definition for Oracle 12c and ORDS
 
-A simple example of a Docker Compose stack definiton, baseed on the 12c Database and Oracle REST Data Services (ORDS) image builds defined in this repository.
+A simple example of a Docker Compose stack definition, based on the 12c Database and Oracle REST Data Services (ORDS) image builds defined in this repository.
 
 The following article provides a description of a stack definition similar to this.
 
