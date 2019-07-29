@@ -1,0 +1,83 @@
+version: '3'
+
+# ------------------------------------------------------------------------------
+# These images must be built in advance, or docker-compose will build them.
+# cd ~/dockerfiles/database/ol8_183
+# docker build -t ol8_183:latest .
+# 
+# cd ~/dockerfiles/ords/ol8_ords
+# docker build -t ol8_ords:latest .
+#
+# Run it.
+# cd ~/dockerfiles/compose/ol8_183_ords
+# docker-compose up
+# ------------------------------------------------------------------------------
+
+services:
+  # ORDS service
+  ords:
+    build:
+      context: ../../ords/ol8_ords/
+      dockerfile: Dockerfile
+    depends_on:
+      - db
+    image: ol8_ords:latest
+    # Comment out volume if you don't care about a persistent CATALINA_BASE.
+    volumes:
+      - /u01/volumes/ol8_183_ords_tomcat:/u01/config/instance1
+    environment:
+      - DB_HOSTNAME=db
+      - DB_PORT=1521
+      - DB_SERVICE=pdb1
+      - APEX_PUBLIC_USER_PASSWORD=ApexPassword1
+      - APEX_TABLESPACE=APEX
+      - TEMP_TABLESPACE=TEMP
+      - APEX_LISTENER_PASSWORD=ApexPassword1
+      - APEX_REST_PASSWORD=ApexPassword1
+      - PUBLIC_PASSWORD=ApexPassword1
+      - SYS_PASSWORD=SysPassword1
+      - KEYSTORE_PASSWORD=KeystorePassword1
+    ports:
+      - "8080:8080"
+      - "8443:8443"
+    networks:
+      - ordsnet
+    restart: unless-stopped
+
+  # Oracle Database service
+  db:
+    build:
+      context: ../../database/ol8_183/
+      dockerfile: Dockerfile
+    image: ol8_183:latest
+    # Use persistent volume of your choice.
+    volumes:
+      #- db_data:/u02
+      - /u01/volumes/ol8_183_ords_db:/u02
+    environment:
+      - SYS_PASSWORD=SysPassword1
+      - PDB_PASSWORD=PdbPassword1
+      - APEX_EMAIL=me@example.com
+      - APEX_PASSWORD=ApexPassword1
+    ports:
+      - "1521:1521"
+    networks:
+      - ordsnet
+    restart: unless-stopped
+
+  # Portainer
+  portainer:
+    image: portainer/portainer
+    volumes:
+      - portainer_data:/data
+      - /var/run/docker.sock:/var/run/docker.sock
+    ports:
+      - "9000:9000"
+    restart: unless-stopped
+
+volumes:
+#  db_data:
+  portainer_data:
+
+networks:
+  ordsnet:
