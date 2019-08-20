@@ -1,4 +1,16 @@
 echo "******************************************************************************"
+echo "Check if this is the first run." `date`
+echo "******************************************************************************"
+FIRST_RUN="false"
+if [ ! -f ~/CONTAINER_ALREADY_STARTED_FLAG ]; then
+  echo "First run."
+  FIRST_RUN="true"
+  touch ~/CONTAINER_ALREADY_STARTED_FLAG
+else
+  echo "Not first run."
+fi
+
+echo "******************************************************************************"
 echo "Handle shutdowns." `date`
 echo "docker stop --time=30 {container}" `date`
 echo "******************************************************************************"
@@ -13,6 +25,8 @@ trap gracefulshutdown SIGKILL
 echo "******************************************************************************"
 echo "Check DB is available." `date`
 echo "******************************************************************************"
+export PATH=${PATH}:${JAVA_HOME}/bin
+
 function check_db {
   CONNECTION=$1
   RETVAL=`/u01/sqlcl/bin/sql -silent ${CONNECTION} <<EOF
@@ -71,7 +85,8 @@ fi
 echo "******************************************************************************"
 echo "Prepare the ORDS parameter file." `date`
 echo "******************************************************************************"
-cat > ${ORDS_HOME}/params/ords_params.properties <<EOF
+if [ "${FIRST_RUN}" == "true" ]; then
+  cat > ${ORDS_HOME}/params/ords_params.properties <<EOF
 db.hostname=${DB_HOSTNAME}
 db.port=${DB_PORT}
 db.servicename=${DB_SERVICE}
@@ -97,17 +112,18 @@ sys.user=SYS
 sys.password=${SYS_PASSWORD}
 EOF
 
-echo "******************************************************************************"
-echo "Configure ORDS." `date`
-echo "******************************************************************************"
-cd ${ORDS_HOME}
-$JAVA_HOME/bin/java -jar ords.war configdir ${ORDS_CONF}
-$JAVA_HOME/bin/java -jar ords.war
+  echo "******************************************************************************"
+  echo "Configure ORDS." `date`
+  echo "******************************************************************************"
+  cd ${ORDS_HOME}
+  $JAVA_HOME/bin/java -jar ords.war configdir ${ORDS_CONF}
+  $JAVA_HOME/bin/java -jar ords.war
 
-echo "******************************************************************************"
-echo "Install ORDS. Safe to run on DB with existing config." `date`
-echo "******************************************************************************"
-cp ords.war ${CATALINA_BASE}/webapps/
+  echo "******************************************************************************"
+  echo "Install ORDS. Safe to run on DB with existing config." `date`
+  echo "******************************************************************************"
+  cp ords.war ${CATALINA_BASE}/webapps/
+fi
 
 echo "******************************************************************************"
 echo "Configure HTTPS." `date`
