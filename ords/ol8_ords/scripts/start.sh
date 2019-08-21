@@ -52,9 +52,6 @@ do
   check_db ${CONNECTION}
 done
 
-echo "******************************************************************************"
-echo "Prepare CATALINA_BASE." `date`
-echo "******************************************************************************"
 if [ ! -d ${CATALINA_BASE}/conf ]; then
   echo "******************************************************************************"
   echo "New CATALINA_BASE location." `date`
@@ -75,17 +72,17 @@ if [ ! -d ${CATALINA_BASE}/webapps/i ]; then
   APEX_IMAGES_REFRESH="false"
 fi
 
-if [ "${APEX_IMAGES_REFRESH}" = "true" ]; then
+if [ "${APEX_IMAGES_REFRESH}" == "true" ]; then
   echo "******************************************************************************"
   echo "Overwrite APEX images." `date`
   echo "******************************************************************************"
   cp -R ${SOFTWARE_DIR}/images/* ${CATALINA_BASE}/webapps/i/
 fi
 
-echo "******************************************************************************"
-echo "Prepare the ORDS parameter file." `date`
-echo "******************************************************************************"
 if [ "${FIRST_RUN}" == "true" ]; then
+  echo "******************************************************************************"
+  echo "Prepare the ORDS parameter file." `date`
+  echo "******************************************************************************"
   cat > ${ORDS_HOME}/params/ords_params.properties <<EOF
 db.hostname=${DB_HOSTNAME}
 db.port=${DB_PORT}
@@ -125,10 +122,10 @@ EOF
   cp ords.war ${CATALINA_BASE}/webapps/
 fi
 
-echo "******************************************************************************"
-echo "Configure HTTPS." `date`
-echo "******************************************************************************"
 if [ ! -f ${KEYSTORE_DIR}/keystore.jks ]; then
+  echo "******************************************************************************"
+  echo "Configure HTTPS." `date`
+  echo "******************************************************************************"
   mkdir -p ${KEYSTORE_DIR}
   cd ${KEYSTORE_DIR}
   ${JAVA_HOME}/bin/keytool -genkey -keyalg RSA -alias selfsigned -keystore keystore.jks \
