@@ -151,7 +151,7 @@ alter pluggable database ${PDB_NAME} save state;
 exit;
 EOF
 
-  if [ "$INSTALL_APEX" = "true" ]; then
+  if [ "$INSTALL_APEX" == "true" ]; then
     echo "******************************************************************************"
     echo "Install APEX." `date`
     echo "******************************************************************************"

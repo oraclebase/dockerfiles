@@ -142,7 +142,7 @@ EOF
   fixConfig;
   dbstart ${ORACLE_HOME}
 
-  if [ "$INSTALL_APEX" = "true" ]; then
+  if [ "$INSTALL_APEX" == "true" ]; then
     echo "******************************************************************************"
     echo "Install APEX." `date`
     echo "******************************************************************************"
