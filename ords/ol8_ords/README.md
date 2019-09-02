@@ -18,7 +18,7 @@ $ tree
 │   ├── server.xml
 │   └── start.sh
 └── software
-    ├── apache-tomcat-9.0.22.tar.gz
+    ├── apache-tomcat-9.0.24.tar.gz
     ├── apex_19.1_en.zip
     ├── openjdk-12.0.2_linux-x64_bin.tar.gz
     ├── ords-19.2.0.199.1647.zip
