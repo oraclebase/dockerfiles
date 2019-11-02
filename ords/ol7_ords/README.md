@@ -18,9 +18,9 @@ $ tree
 │   ├── server.xml
 │   └── start.sh
 └── software
-    ├── apache-tomcat-9.0.24.tar.gz
-    ├── apex_19.1_en.zip
-    ├── openjdk-12.0.1_linux-x64_bin.tar.gz
+    ├── apache-tomcat-9.0.27.tar.gz
+    ├── apex_19.2_en.zip
+    ├── OpenJDK11U-jdk_x64_linux_hotspot_11.0.5_10.tar.gz
     ├── ords-19.2.0.199.1647.zip
     ├── put_software_here.txt
     └── sqlcl-19.2.1.206.1649.zip
