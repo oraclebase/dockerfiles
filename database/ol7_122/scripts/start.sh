@@ -171,6 +171,7 @@ END;
 --@apex_epg_config.sql ${ORACLE_HOME}
 
 alter user APEX_PUBLIC_USER identified by ${APEX_PASSWORD} account unlock;
+alter user APEX_REST_PUBLIC_USER identified by ${APEX_PASSWORD} account unlock;
 
 exit;
 EOF
