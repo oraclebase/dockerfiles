@@ -22,7 +22,7 @@ TEMP_FILE=`ls`
 ln -s ${TEMP_FILE} latest
 
 echo "ORDS setup."
-mkdir -p ${ORDS_CONF}
+mkdir -p ${ORDS_HOME}
 cd ${ORDS_HOME}
 unzip -oq ${SOFTWARE_DIR}/${ORDS_SOFTWARE}
 rm -f ${SOFTWARE_DIR}/${ORDS_SOFTWARE}
