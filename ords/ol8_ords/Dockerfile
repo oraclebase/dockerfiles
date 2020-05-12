@@ -32,9 +32,9 @@
 #
 # ------------------------------------------------------------------------------
 
-# Set the base image to Oracle Linux 8 - Slim
-#FROM oraclelinux:8-slim
-FROM oraclelinux:8
+# Set the base image to Oracle Linux 8
+FROM oraclelinux:8-slim
+#FROM oraclelinux:8
 
 # File Author / Maintainer
 # Use LABEL rather than deprecated MAINTAINER
