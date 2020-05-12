@@ -31,9 +31,9 @@
 #
 # ------------------------------------------------------------------------------
 
-# Set the base image to Oracle Linux 8 - Slim
-#FROM oraclelinux:8-slim
-FROM oraclelinux:8
+# Set the base image to Oracle Linux 8
+FROM oraclelinux:8-slim
+#FROM oraclelinux:8
 
 # File Author / Maintainer
 # Use LABEL rather than deprecated MAINTAINER
@@ -78,16 +78,17 @@ COPY scripts/* ${SCRIPTS_DIR}/
 # high IDs, which causes issues. Note 2 on link below.
 # https://docs.docker.com/engine/userguide/eng-image/dockerfile_best-practices/#user
 #
-RUN groupadd -g 500 dba                                                     && \
+RUN microdnf install -y shadow-utils                                        && \
+    groupadd -g 500 dba                                                     && \
     groupadd -g 501 oinstall                                                && \
     groupadd -g 1042 docker_fg                                              && \
     useradd -d /home/oracle -u 500 -g dba -G oinstall,dba,docker_fg -m -s /bin/bash oracle   && \
     sh ${SCRIPTS_DIR}/install_os_packages.sh                                && \
     mkdir -p ${ORACLE_HOME}                                                 && \
     mkdir -p /u02/oradata                                                   && \
-    chown -R oracle.oinstall /u01                                           && \
+    chown -R oracle:oinstall /u01                                           && \
     chmod u+x ${SCRIPTS_DIR}/*.sh                                           && \
-    chown oracle:docker_fg /u02                                             && \
+    chown -R oracle:docker_fg /u02                                          && \
     chmod 775 /u02                                                          && \
     chmod g+s /u02
 
@@ -133,6 +134,10 @@ RUN sh ${ORA_INVENTORY}/orainstRoot.sh                                      && \
 
 # Perform the following actions as the oracle user
 USER oracle
+
+# Uncomment the following line if you want to apply patches.
+# You must have downloaded the patches and amended the "oracle_software_patch.sh" script.
+RUN sh ${SCRIPTS_DIR}/oracle_software_patch.sh
 
 VOLUME ["/u02"]
 EXPOSE 1521 5500
