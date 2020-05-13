@@ -147,6 +147,6 @@ HEALTHCHECK --interval=5m --start-period=10m \
 # ------------------------------------------------------------------------------
 # The start script performs all config based on runtime environment variables.
 # First run creates the database.
- CMD exec ${SCRIPTS_DIR}/start.sh
+CMD exec ${SCRIPTS_DIR}/start.sh
 
 # End
