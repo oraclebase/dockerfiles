@@ -137,7 +137,7 @@ USER oracle
 
 # Uncomment the following line if you want to apply patches.
 # You must have downloaded the patches and amended the "oracle_software_patch.sh" script.
-RUN sh ${SCRIPTS_DIR}/oracle_software_patch.sh
+#RUN sh ${SCRIPTS_DIR}/oracle_software_patch.sh
 
 VOLUME ["/u02"]
 EXPOSE 1521 5500
