@@ -89,9 +89,9 @@ RUN groupadd -g 500 dba                                                     && \
     mkdir -p /u02/oradata                                                   && \
     chown -R oracle.oinstall /u01                                           && \
     chmod u+x ${SCRIPTS_DIR}/*.sh                                           && \
-    chown oracle:docker_fg /u02                                             && \
-    chmod 775 /u02                                                          && \
-    chmod g+s /u02
+    chown -R oracle:docker_fg /u02                                          && \
+    chmod -R 775 /u02                                                       && \
+    chmod -R g+s /u02
 
 # Perform the following actions as the oracle user
 USER oracle
