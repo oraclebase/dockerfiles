@@ -102,7 +102,7 @@ if [ ! -d /u02/oradata/${ORACLE_SID} ]; then
     -pdbName ${PDB_NAME}                                                       \
     -pdbAdminPassword ${PDB_PASSWORD}                                          \
     -databaseType MULTIPURPOSE                                                 \
-    -automaticMemoryManagement false                                           \
+    -memoryMgmtType auto_sga                                                   \
     -totalMemory 1536                                                          \
     -storageType FS                                                            \
     -datafileDestination "/u02/oradata/"                                       \
