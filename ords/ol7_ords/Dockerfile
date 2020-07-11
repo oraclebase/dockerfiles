@@ -6,11 +6,11 @@
 #       https://adoptopenjdk.net/releases.html?variant=openjdk11&jvmVariant=hotspot
 #   - Tomcat 9.0.x :
 #       https://tomcat.apache.org/download-90.cgi
-#   - Oracle REST Data Services (ORDS) 19.x :
+#   - Oracle REST Data Services (ORDS) 20.x :
 #       http://www.oracle.com/technetwork/developer-tools/rest-data-services/downloads/index.html
 #   - Oracle Application Express (APEX) 20.x :
 #       http://www.oracle.com/technetwork/developer-tools/apex/downloads/index.html
-#   - Oracle SQLcl 19.x :
+#   - Oracle SQLcl 20.x :
 #       http://www.oracle.com/technetwork/developer-tools/sqlcl/downloads/index.html
 #
 # Example build and run. Assumes Docker network called "my_network" to connect to DB.
@@ -43,10 +43,10 @@ LABEL maintainer="tim@oracle-base.com"
 # ------------------------------------------------------------------------------
 # Define fixed (build time) environment variables.
 ENV JAVA_SOFTWARE="OpenJDK11U-jdk_x64_linux_hotspot_11.0.7_10.tar.gz"          \
-    TOMCAT_SOFTWARE="apache-tomcat-9.0.34.tar.gz"                              \
-    ORDS_SOFTWARE="ords-19.4.6.142.1859.zip"                                   \
+    TOMCAT_SOFTWARE="apache-tomcat-9.0.37.tar.gz"                              \
+    ORDS_SOFTWARE="ords-20.2.0.178.1804.zip"                                   \
     APEX_SOFTWARE="apex_20.1_en.zip"                                           \ 
-    SQLCL_SOFTWARE="sqlcl-19.4.0.354.0937.zip"                                 \
+    SQLCL_SOFTWARE="sqlcl-20.2.0.174.1557.zip"                                 \
     SOFTWARE_DIR="/u01/software"                                               \
     SCRIPTS_DIR="/u01/scripts"                                                 \
     KEYSTORE_DIR="/u01/keystore"                                               \
