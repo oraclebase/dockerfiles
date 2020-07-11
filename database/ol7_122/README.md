@@ -22,3 +22,7 @@ $ tree
 2 directories, 7 files
 $
 ```
+
+If you are using an external host volume for persistent storage, the build expects it to owned by a group with the group ID of 1042. This is described here.
+
+[Docker : Host File System Permissions for Container Persistent Host Volumes](https://oracle-base.com/articles/linux/docker-host-file-system-permissions-for-container-persistent-host-volumes)
