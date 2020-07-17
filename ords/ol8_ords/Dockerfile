@@ -71,6 +71,7 @@ ENV DB_HOSTNAME="ol8-19.localdomain"                                           \
     SYS_PASSWORD="SysPassword1"                                                \
     KEYSTORE_PASSWORD="KeystorePassword1"                                      \
     AJP_SECRET="AJPSecret1"                                                    \
+    AJP_ADDRESS="::1"                                                          \
     APEX_IMAGES_REFRESH="false"                                                \
     PROXY_IPS="123.123.123.123\|123.123.123.124"
 

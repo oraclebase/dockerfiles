@@ -138,6 +138,7 @@ if [ ! -f ${KEYSTORE_DIR}/keystore.jks ]; then
   sed -i -e "s|###KEYSTORE_DIR###|${KEYSTORE_DIR}|g" ${SCRIPTS_DIR}/server.xml
   sed -i -e "s|###KEYSTORE_PASSWORD###|${KEYSTORE_PASSWORD}|g" ${SCRIPTS_DIR}/server.xml
   sed -i -e "s|###AJP_SECRET###|${AJP_SECRET}|g" ${SCRIPTS_DIR}/server.xml
+  sed -i -e "s|###AJP_ADDRESS###|${AJP_ADDRESS}|g" ${SCRIPTS_DIR}/server.xml
   sed -i -e "s|###PROXY_IPS###|${PROXY_IPS}|g" ${SCRIPTS_DIR}/server.xml
   cp ${SCRIPTS_DIR}/server.xml ${CATALINA_BASE}/conf
   cp ${SCRIPTS_DIR}/web.xml ${CATALINA_BASE}/conf
