@@ -109,6 +109,7 @@ sys.user=SYS
 sys.password=${SYS_PASSWORD}
 restEnabledSql.active=true
 feature.sdw=true
+database.api.enabled=true
 EOF
 
   echo "******************************************************************************"
