@@ -15,11 +15,10 @@ $ tree
 │   ├── healthcheck.sh
 │   └── start.sh
 └── software
-    ├── apex_20.1_en.zip
+    ├── apex_20.2_en.zip
     ├── LINUX.X64_180000_db_home.zip
     └── put_software_here.txt
 
-2 directories, 7 files
 $
 ```
 

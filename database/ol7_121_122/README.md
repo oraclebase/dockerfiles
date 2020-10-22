@@ -18,6 +18,5 @@ $ tree
     ├── linuxx64_12201_database.zip
     └── put_software_here.txt
 
-2 directories, 7 files
 $
 ```
