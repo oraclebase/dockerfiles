@@ -44,9 +44,9 @@ LABEL maintainer="tim@oracle-base.com"
 # ------------------------------------------------------------------------------
 # Define fixed (build time) environment variables.
 ENV JAVA_SOFTWARE="OpenJDK11U-jdk_x64_linux_hotspot_11.0.8_10.tar.gz"          \
-    TOMCAT_SOFTWARE="apache-tomcat-9.0.37.tar.gz"                              \
+    TOMCAT_SOFTWARE="apache-tomcat-9.0.39.tar.gz"                              \
     ORDS_SOFTWARE="ords-20.2.0.178.1804.zip"                                   \
-    APEX_SOFTWARE="apex_20.1_en.zip"                                           \ 
+    APEX_SOFTWARE="apex_20.2_en.zip"                                           \ 
     SQLCL_SOFTWARE="sqlcl-20.2.0.174.1557.zip"                                 \
     SOFTWARE_DIR="/u01/software"                                               \
     SCRIPTS_DIR="/u01/scripts"                                                 \
