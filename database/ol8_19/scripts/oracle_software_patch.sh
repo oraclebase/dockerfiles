@@ -7,10 +7,10 @@ echo "**************************************************************************
 # Adjust to suit your patch level.
 export PATH=${ORACLE_HOME}/OPatch:${PATH}
 export OPATCH_FILE="p6880880_190000_Linux-x86-64.zip"
-export PATCH_FILE="p30783543_190000_Linux-x86-64.zip"
-export PATCH_TOP=${SOFTWARE_DIR}/30783543
-export PATCH_PATH1=${PATCH_TOP}/30869156
-export PATCH_PATH2=${PATCH_TOP}/30805684
+export PATCH_FILE="p31720396_190000_Linux-x86-64.zip"
+export PATCH_TOP=${SOFTWARE_DIR}/31720396
+export PATCH_PATH1=${PATCH_TOP}/31668882
+export PATCH_PATH2=${PATCH_TOP}/31771877
 
 echo "******************************************************************************"
 echo "Prepare opatch." `date`
