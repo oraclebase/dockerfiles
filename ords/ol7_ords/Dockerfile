@@ -42,7 +42,7 @@ LABEL maintainer="tim@oracle-base.com"
 
 # ------------------------------------------------------------------------------
 # Define fixed (build time) environment variables.
-ENV JAVA_SOFTWARE="OpenJDK11U-jdk_x64_linux_hotspot_11.0.9_11.tar.gz"          \
+ENV JAVA_SOFTWARE="OpenJDK11U-jdk_x64_linux_hotspot_11.0.10_9.tar.gz"          \
     TOMCAT_SOFTWARE="apache-tomcat-9.0.41.tar.gz"                              \
     ORDS_SOFTWARE="ords-20.4.1.013.1644.zip"                                   \
     APEX_SOFTWARE="apex_20.2_en.zip"                                           \ 
