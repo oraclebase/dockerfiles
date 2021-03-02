@@ -76,6 +76,7 @@ ENV DB_HOSTNAME="ol8-19.localdomain"                                           \
     PROXY_IPS="123.123.123.123\|123.123.123.124"                               \
     PROXY_SERVER="foo.bar.com"                                                 \
     PROXY_PORT="443"                                                           \
+    HTTP_SCHEME="https"                                                        \
     JVM_OPTS=""
 
 # ------------------------------------------------------------------------------
