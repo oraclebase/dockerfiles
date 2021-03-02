@@ -116,8 +116,8 @@ EOF
   echo "Configure ORDS." `date`
   echo "******************************************************************************"
   cd ${ORDS_HOME}
-  $JAVA_HOME/bin/java -jar ords.war configdir ${ORDS_CONF}
-  $JAVA_HOME/bin/java -jar ords.war
+  $JAVA_HOME/bin/java $JVM_OPTS -jar ords.war configdir ${ORDS_CONF}
+  $JAVA_HOME/bin/java $JVM_OPTS -jar ords.war
 
   echo "******************************************************************************"
   echo "Install ORDS. Safe to run on DB with existing config." `date`
@@ -140,6 +140,9 @@ if [ ! -f ${KEYSTORE_DIR}/keystore.jks ]; then
   sed -i -e "s|###AJP_SECRET###|${AJP_SECRET}|g" ${SCRIPTS_DIR}/server.xml
   sed -i -e "s|###AJP_ADDRESS###|${AJP_ADDRESS}|g" ${SCRIPTS_DIR}/server.xml
   sed -i -e "s|###PROXY_IPS###|${PROXY_IPS}|g" ${SCRIPTS_DIR}/server.xml
+  if [ "${REVERSE_PROXY}" != "foo.bar.com" ]; then
+    sed -i ':a;N;$!ba;s|redirectPort="8443" />|proxyServer="'${PROXY_SERVER}'"\n               proxyPort="'${PROXY_PORT}'"\n               scheme="https" />|' scripts/server.xml
+  fi
   cp ${SCRIPTS_DIR}/server.xml ${CATALINA_BASE}/conf
   cp ${SCRIPTS_DIR}/web.xml ${CATALINA_BASE}/conf
 fi;

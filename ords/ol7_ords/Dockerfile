@@ -72,7 +72,10 @@ ENV DB_HOSTNAME="ol7-183.localdomain"                                          \
     AJP_SECRET="AJPSecret1"                                                    \
     AJP_ADDRESS="::1"                                                          \
     APEX_IMAGES_REFRESH="false"                                                \
-    PROXY_IPS="123.123.123.123\|123.123.123.124"
+    PROXY_IPS="123.123.123.123\|123.123.123.124"                               \
+    PROXY_SERVER="foo.bar.com"                                                 \
+    PROXY_PORT="443"                                                           \
+    JVM_OPTS=""
 
 # ------------------------------------------------------------------------------
 # Get all the files for the build.
