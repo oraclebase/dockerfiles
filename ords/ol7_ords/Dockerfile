@@ -58,7 +58,7 @@ ENV JAVA_SOFTWARE="OpenJDK11U-jdk_x64_linux_hotspot_11.0.10_9.tar.gz"          \
 
 # ------------------------------------------------------------------------------
 # Define config (runtime) environment variables.
-ENV DB_HOSTNAME="ol7-183.localdomain"                                          \
+ENV DB_HOSTNAME="db"                                          \
     DB_PORT="1521"                                                             \
     DB_SERVICE="pdb1"                                                          \
     APEX_PUBLIC_USER_PASSWORD="ApexPassword1"                                  \
