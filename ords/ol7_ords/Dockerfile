@@ -6,11 +6,11 @@
 #       https://adoptopenjdk.net/releases.html?variant=openjdk11&jvmVariant=hotspot
 #   - Tomcat 9.0.x :
 #       https://tomcat.apache.org/download-90.cgi
-#   - Oracle REST Data Services (ORDS) 20.x :
+#   - Oracle REST Data Services (ORDS) 21.x :
 #       http://www.oracle.com/technetwork/developer-tools/rest-data-services/downloads/index.html
 #   - Oracle Application Express (APEX) 20.x :
 #       http://www.oracle.com/technetwork/developer-tools/apex/downloads/index.html
-#   - Oracle SQLcl 20.x :
+#   - Oracle SQLcl 21.x :
 #       http://www.oracle.com/technetwork/developer-tools/sqlcl/downloads/index.html
 #
 # Example build and run. Assumes Docker network called "my_network" to connect to DB.
