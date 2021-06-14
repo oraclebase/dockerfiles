@@ -17,6 +17,8 @@
 #
 # docker build -t ol7_ords:latest .
 # docker build --squash -t ol7_ords:latest .
+# Podman
+# docker build --format docker --no-cache -t ol8_ords:latest .
 #
 # docker run -dit --name ol7_ords_con -p 8080:8080 -p 8443:8443 --network=my_network -e DB_HOSTNAME=ol7_183_con ol7_ords:latest
 # Pure CATALINA_BASE on a persistent volume.

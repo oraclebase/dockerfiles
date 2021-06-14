@@ -11,6 +11,8 @@
 #
 # docker build -t ol8_19:latest .
 # docker build --squash -t ol8_19:latest .
+# Podman
+# docker build --format docker --no-cache -t ol8_19:latest .
 #
 # Non-persistent storage.
 # docker run -dit --name ol8_19_con -p 1521:1521 -p 5500:5500 --shm-size="1G" ol8_19:latest
