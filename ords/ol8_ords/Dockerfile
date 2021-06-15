@@ -91,7 +91,7 @@ RUN sh ${SCRIPTS_DIR}/install_os_packages.sh                                && \
 # Perform the following actions as the tomcat user
 USER tomcat
 
-VOLUME [${CATALINA_BASE}]
+#VOLUME [${CATALINA_BASE}]
 EXPOSE 8080 8443
 HEALTHCHECK --interval=1m --start-period=1m \
    CMD ${SCRIPTS_DIR}/healthcheck.sh >/dev/null || exit 1

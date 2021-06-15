@@ -141,7 +141,7 @@ USER oracle
 # You must have downloaded the patches and amended the "oracle_software_patch.sh" script.
 #RUN sh ${SCRIPTS_DIR}/oracle_software_patch.sh
 
-VOLUME ["/u02"]
+#VOLUME ["/u02"]
 EXPOSE 1521 5500
 HEALTHCHECK --interval=5m --start-period=10m \
    CMD ${SCRIPTS_DIR}/healthcheck.sh >/dev/null || exit 1

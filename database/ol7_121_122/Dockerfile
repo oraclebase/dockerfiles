@@ -111,7 +111,7 @@ RUN sh ${ORACLE_HOME_2}/root.sh
 # Perform the following actions as the oracle user
 USER oracle
 
-VOLUME ["/u02"]
+#VOLUME ["/u02"]
 EXPOSE 1521 5500
 HEALTHCHECK --interval=5m --start-period=10m \
    CMD ${SCRIPTS_DIR}/healthcheck.sh >/dev/null || exit 1
