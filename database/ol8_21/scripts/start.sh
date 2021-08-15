@@ -18,12 +18,6 @@ echo "under the ORACLE_HOME." `date`
 echo "******************************************************************************"
 function fixConfig {
   cp -f /u02/config/oratab /etc/oratab
-  if [ ! -L ${ORACLE_HOME}/dbs/orapw${ORACLE_SID} ]; then
-    ln -s /u02/config/${ORACLE_SID}/orapw${ORACLE_SID} ${ORACLE_HOME}/dbs/orapw${ORACLE_SID}
-  fi
-  if [ ! -L ${ORACLE_HOME}/dbs/spfile${ORACLE_SID}.ora ]; then
-    ln -s /u02/config/${ORACLE_SID}/spfile${ORACLE_SID}.ora ${ORACLE_HOME}/dbs/spfile${ORACLE_SID}.ora
-  fi
   if [ ! -L ${ORACLE_BASE}/admin ]; then
     ln -s /u02/config/${ORACLE_SID}/admin ${ORACLE_BASE}/admin
   fi
@@ -33,6 +27,10 @@ function fixConfig {
   if [ ! -L ${ORACLE_BASE}/diag ]; then
     rm -Rf ${ORACLE_BASE}/diag
     ln -s /u02/config/${ORACLE_SID}/diag ${ORACLE_BASE}/diag
+  fi
+  if [ ! -L ${ORACLE_BASE}/dbs ]; then
+    rm -Rf ${ORACLE_BASE}/dbs
+    ln -s /u02/config/${ORACLE_SID}/dbs ${ORACLE_BASE}/dbs
   fi
   if [ ! -L ${ORACLE_BASE}/homes ]; then
     rm -Rf ${ORACLE_BASE}/homes
@@ -138,13 +136,12 @@ EOF
   sed -i -e "s|${ORACLE_SID}:${ORACLE_HOME}:N|${ORACLE_SID}:${ORACLE_HOME}:Y|g" /u02/config/oratab
   cp -f /u02/config/oratab /etc/oratab 
     
-  mv ${ORACLE_HOME}/dbs/orapw${ORACLE_SID} /u02/config/${ORACLE_SID}
-  mv ${ORACLE_HOME}/dbs/spfile${ORACLE_SID}.ora /u02/config/${ORACLE_SID}
   mv ${ORACLE_BASE}/admin /u02/config/${ORACLE_SID}
   # Make sure FRA is present, in case it has not been created yet.
   mkdir -p ${ORACLE_BASE}/fast_recovery_area
   mv ${ORACLE_BASE}/fast_recovery_area /u02/config/${ORACLE_SID}
   mv ${ORACLE_BASE}/diag /u02/config/${ORACLE_SID}
+  mv ${ORACLE_BASE}/dbs /u02/config/${ORACLE_SID}
   mv ${ORACLE_BASE}/homes /u02/config/${ORACLE_SID}
   fixConfig;
   dbstart ${ORACLE_HOME}
