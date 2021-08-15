@@ -35,7 +35,8 @@ function fixConfig {
     ln -s /u02/config/${ORACLE_SID}/diag ${ORACLE_BASE}/diag
   fi
   if [ ! -L ${ORACLE_BASE}/homes ]; then
-    ln -s /u02/config/${ORACLE_SID}/admin ${ORACLE_BASE}/admin
+    rm -Rf ${ORACLE_BASE}/homes
+    ln -s /u02/config/${ORACLE_SID}/homes ${ORACLE_BASE}/homes
   fi
 }
 
