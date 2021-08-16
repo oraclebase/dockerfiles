@@ -1,7 +1,7 @@
 # ------------------------------------------------------------------------------
 # Dockerfile to build basic Oracle database images
 # Based on the following:
-#   - Oracle Linux 8 - Slim
+#   - Oracle Linux 7 - Slim
 #   - Oracle Database
 #       https://www.oracle.com/technetwork/database/enterprise-edition/downloads/index.html
 #   - Oracle Application Express (APEX)
@@ -9,33 +9,32 @@
 #
 # Example build and run.
 #
-# docker build -t ol8_21:latest .
-# docker build --squash -t ol8_21:latest .
+# docker build -t ol7_21:latest .
+# docker build --squash -t ol7_21:latest .
 # Podman
-# docker build --format docker --no-cache -t ol8_21:latest .
+# docker build --format docker --no-cache -t ol7_21:latest .
 #
 # Non-persistent storage.
-# docker run -dit --name ol8_21_con -p 1521:1521 -p 5500:5500 --shm-size="1G" ol8_21:latest
+# docker run -dit --name ol7_21_con -p 1521:1521 -p 5500:5500 --shm-size="1G" ol7_19:latest
 #
 # Persistent storage.
-# docker run -dit --name ol8_21_con -p 1521:1521 -p 5500:5500 --shm-size="1G" -v /u01/volumes/ol8_21_con_u02/:/u02 ol8_21:latest
+# docker run -dit --name ol7_21_con -p 1521:1521 -p 5500:5500 --shm-size="1G" -v /u01/volumes/ol7_21_con_u02/:/u02 ol7_21:latest
 #
 # Persistent storage and part of Docker network called "my_network".
-# docker run -dit --name ol8_21_con -p 1521:1521 -p 5500:5500 --shm-size="1G" --network=my_network -v /u01/volumes/ol8_21_con_u02/:/u02 ol8_21:latest
+# docker run -dit --name ol7_21_con -p 1521:1521 -p 5500:5500 --shm-size="1G" --network=my_network -v /u01/volumes/ol7_21_con_u02/:/u02 ol7_21:latest
 #
-# docker logs --follow ol8_21_con
-# docker exec -it ol8_21_con bash
+# docker logs --follow ol7_21_con
+# docker exec -it ol7_21_con bash
 #
-# docker stop --time=30 ol8_21_con
-# docker start ol8_21_con
+# docker stop --time=30 ol7_21_con
+# docker start ol7_21_con
 # 
-# docker rm -vf ol8_21_con 
+# docker rm -vf ol7_21_con 
 #
 # ------------------------------------------------------------------------------
 
-# Set the base image to Oracle Linux 8
-FROM oraclelinux:8-slim
-#FROM oraclelinux:8
+# Set the base image to Oracle Linux 7 - Slim
+FROM oraclelinux:7-slim
 
 # File Author / Maintainer
 # Use LABEL rather than deprecated MAINTAINER
@@ -81,15 +80,17 @@ COPY scripts/* ${SCRIPTS_DIR}/
 # high IDs, which causes issues. Note 2 on link below.
 # https://docs.docker.com/engine/userguide/eng-image/dockerfile_best-practices/#user
 #
-RUN microdnf install -y shadow-utils                                        && \
-    groupadd -g 500 dba                                                     && \
+RUN groupadd -g 500 dba                                                     && \
     groupadd -g 501 oinstall                                                && \
     groupadd -g 1042 docker_fg                                              && \
     useradd -d /home/oracle -u 500 -g dba -G oinstall,dba,docker_fg -m -s /bin/bash oracle   && \
-    sh ${SCRIPTS_DIR}/install_os_packages.sh                                && \
+    yum -y install unzip tar gzip                                           && \
+    yum -y update                                                           && \
+    yum -y install oracle-database-preinstall-19c                           && \
+    rm -Rf /var/cache/yum                                                   && \
     mkdir -p ${ORACLE_HOME}                                                 && \
     mkdir -p /u02/oradata                                                   && \
-    chown -R oracle:oinstall /u01                                           && \
+    chown -R oracle.oinstall /u01                                           && \
     chmod u+x ${SCRIPTS_DIR}/*.sh                                           && \
     chown -R oracle:docker_fg /u02                                          && \
     chmod -R 775 /u02                                                       && \
@@ -104,8 +105,7 @@ RUN cd ${ORACLE_HOME}                                                       && \
     rm -f ${SOFTWARE_DIR}/${DB_SOFTWARE}
 
 # Do software-only installation
-RUN export CV_ASSUME_DISTID=OEL7.6                                          && \
-    ${ORACLE_HOME}/runInstaller -ignorePrereq                                  \
+RUN ${ORACLE_HOME}/runInstaller -ignorePrereq                                  \
     -waitforcompletion -silent                                                 \
     -responseFile ${ORACLE_HOME}/install/response/db_install.rsp               \
     oracle.install.option=INSTALL_DB_SWONLY                                    \
@@ -146,6 +146,6 @@ HEALTHCHECK --interval=5m --start-period=10m \
 # ------------------------------------------------------------------------------
 # The start script performs all config based on runtime environment variables.
 # First run creates the database.
-CMD exec ${SCRIPTS_DIR}/start.sh
+ CMD exec ${SCRIPTS_DIR}/start.sh
 
 # End
