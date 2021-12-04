@@ -21,9 +21,9 @@ $ tree
     ├── apache-tomcat-9.0.54.tar.gz
     ├── apex_21.2_en.zip
     ├── OpenJDK11U-jdk_x64_linux_hotspot_11.0.13_8.tar.gz
-    ├── ords-21.3.0.266.1100.zip
+    ├── ords-21.3.1.301.2050.zip
     ├── put_software_here.txt
-    └── sqlcl-21.3.2.287.1503.zip
+    └── sqlcl-21.3.3.322.1724.zip
 
 $
 ```
