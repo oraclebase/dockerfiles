@@ -48,7 +48,7 @@ ENV JAVA_SOFTWARE="OpenJDK11U-jdk_x64_linux_hotspot_11.0.14_9.tar.gz"          \
     TOMCAT_SOFTWARE="apache-tomcat-9.0.56.tar.gz"                              \
     ORDS_SOFTWARE="ords-21.4.0.348.1956.zip"                                   \
     APEX_SOFTWARE="apex_21.2_en.zip"                                           \ 
-    SQLCL_SOFTWARE="sqlcl-21.4.1.17.1458.zip"                                 \
+    SQLCL_SOFTWARE="sqlcl-21.4.1.17.1458.zip"                                  \
     SOFTWARE_DIR="/u01/software"                                               \
     SCRIPTS_DIR="/u01/scripts"                                                 \
     KEYSTORE_DIR="/u01/keystore"                                               \
@@ -56,8 +56,7 @@ ENV JAVA_SOFTWARE="OpenJDK11U-jdk_x64_linux_hotspot_11.0.14_9.tar.gz"          \
     ORDS_CONF="/u01/ords/conf"                                                 \
     JAVA_HOME="/u01/java/latest"                                               \
     CATALINA_HOME="/u01/tomcat/latest"                                         \
-    CATALINA_BASE="/u01/config/instance1"                                      \
-    DOCKER_FG_ID="3333"
+    CATALINA_BASE="/u01/config/instance1"
 
 # ------------------------------------------------------------------------------
 # Define config (runtime) environment variables.
@@ -75,7 +74,8 @@ ENV DB_HOSTNAME="ol7-183.localdomain"                                          \
     AJP_SECRET="AJPSecret1"                                                    \
     AJP_ADDRESS="::1"                                                          \
     APEX_IMAGES_REFRESH="false"                                                \
-    PROXY_IPS="123.123.123.123\|123.123.123.124"
+    PROXY_IPS="123.123.123.123\|123.123.123.124"                               \
+    DOCKER_FG_ID="3333"
 
 # ------------------------------------------------------------------------------
 # Get all the files for the build.
