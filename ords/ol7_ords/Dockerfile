@@ -56,7 +56,8 @@ ENV JAVA_SOFTWARE="OpenJDK11U-jdk_x64_linux_hotspot_11.0.14_9.tar.gz"          \
     ORDS_CONF="/u01/ords/conf"                                                 \
     JAVA_HOME="/u01/java/latest"                                               \
     CATALINA_HOME="/u01/tomcat/latest"                                         \
-    CATALINA_BASE="/u01/config/instance1"
+    CATALINA_BASE="/u01/config/instance1"                                      \
+    DOCKER_FG_ID="3333"
 
 # ------------------------------------------------------------------------------
 # Define config (runtime) environment variables.
