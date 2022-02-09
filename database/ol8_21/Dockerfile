@@ -66,7 +66,8 @@ ENV ORACLE_SID=cdb1                                                            \
     PDB_PASSWORD="PdbPassword1"                                                \
     INSTALL_APEX="true"                                                        \
     APEX_EMAIL="me@example.com"                                                \
-    APEX_PASSWORD="ApexPassword1"
+    APEX_PASSWORD="ApexPassword1"                                              \
+    DOCKER_FG_ID="1042"
 
 # ------------------------------------------------------------------------------
 # Get all the files for the build.
@@ -84,7 +85,7 @@ COPY scripts/* ${SCRIPTS_DIR}/
 RUN microdnf install -y shadow-utils                                        && \
     groupadd -g 500 dba                                                     && \
     groupadd -g 501 oinstall                                                && \
-    groupadd -g 1042 docker_fg                                              && \
+    groupadd -g ${DOCKER_FG_ID} docker_fg                                   && \
     useradd -d /home/oracle -u 500 -g dba -G oinstall,dba,docker_fg -m -s /bin/bash oracle   && \
     sh ${SCRIPTS_DIR}/install_os_packages.sh                                && \
     mkdir -p ${ORACLE_HOME}                                                 && \
