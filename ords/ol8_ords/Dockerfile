@@ -75,7 +75,8 @@ ENV DB_HOSTNAME="ol8-19.localdomain"                                           \
     AJP_SECRET="AJPSecret1"                                                    \
     AJP_ADDRESS="::1"                                                          \
     APEX_IMAGES_REFRESH="false"                                                \
-    PROXY_IPS="123.123.123.123\|123.123.123.124"
+    PROXY_IPS="123.123.123.123\|123.123.123.124"                               \
+    DOCKER_FG_ID="1042"
 
 # ------------------------------------------------------------------------------
 # Get all the files for the build.
