@@ -75,7 +75,7 @@ ENV DB_HOSTNAME="ol7-183.localdomain"                                          \
     AJP_ADDRESS="::1"                                                          \
     APEX_IMAGES_REFRESH="false"                                                \
     PROXY_IPS="123.123.123.123\|123.123.123.124"                               \
-    DOCKER_FG_ID="3333"
+    DOCKER_FG_ID="1042"
 
 # ------------------------------------------------------------------------------
 # Get all the files for the build.
