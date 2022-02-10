@@ -62,8 +62,9 @@ ENV ORACLE_SID="cdb1"                                                          \
     INSTALL_APEX="true"                                                        \
     PDB_PASSWORD="PdbPassword1"                                                \
     APEX_EMAIL="me@example.com"                                                \
-    APEX_PASSWORD="ApexPassword1"                                              \
-    DOCKER_FG_ID="1042"
+    APEX_PASSWORD="ApexPassword1"                                              \\
+    DOCKER_FG_ID="1042"                                                        \
+    ORACLE_USER_ID="500"
 
 # ------------------------------------------------------------------------------
 # Get all the files for the build.
@@ -81,7 +82,7 @@ COPY scripts/* ${SCRIPTS_DIR}/
 RUN groupadd -g 500 dba                                                     && \
     groupadd -g 501 oinstall                                                && \
     groupadd -g ${DOCKER_FG_ID} docker_fg                                   && \
-    useradd -d /home/oracle -u 500 -g dba -G oinstall,dba,docker_fg -m -s /bin/bash oracle   && \
+    useradd -d /home/oracle -u ${ORACLE_USER_ID} -g dba -G oinstall,dba,docker_fg -m -s /bin/bash oracle   && \
     yum -y install unzip tar gzip                                           && \
     yum -y update                                                           && \
     yum -y install oracle-rdbms-server-12cR1-preinstall                     && \
