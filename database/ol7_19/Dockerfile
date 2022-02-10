@@ -66,7 +66,7 @@ ENV ORACLE_SID=cdb1                                                            \
     APEX_EMAIL="me@example.com"                                                \
     APEX_PASSWORD="ApexPassword1"                                              \
     DOCKER_FG_ID="1042"                                                        \
-    DOCKER_FG_ID="500"
+    ORACLE_USER_ID="500"
 
 # ------------------------------------------------------------------------------
 # Get all the files for the build.
