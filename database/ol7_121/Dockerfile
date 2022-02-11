@@ -62,7 +62,7 @@ ENV ORACLE_SID="cdb1"                                                          \
     INSTALL_APEX="true"                                                        \
     PDB_PASSWORD="PdbPassword1"                                                \
     APEX_EMAIL="me@example.com"                                                \
-    APEX_PASSWORD="ApexPassword1"                                              \\
+    APEX_PASSWORD="ApexPassword1"                                              \
     DOCKER_FG_ID="1042"                                                        \
     ORACLE_USER_ID="500"
 
