@@ -85,7 +85,7 @@ if [ "${FIRST_RUN}" == "true" ]; then
   echo "******************************************************************************"
   cd ${ORDS_HOME}
 
-  export ORDS_CONFIG=/u01/config/ords
+  export ORDS_CONFIG=${ORDS_CONF}
   ${ORDS_HOME}/bin/ords --config ${ORDS_CONF} install \
        --log-folder ${ORDS_CONF}/logs \
        --admin-user SYS \
