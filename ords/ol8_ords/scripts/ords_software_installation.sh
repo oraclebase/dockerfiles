@@ -26,7 +26,7 @@ mkdir -p ${ORDS_HOME}
 cd ${ORDS_HOME}
 unzip -oq ${SOFTWARE_DIR}/${ORDS_SOFTWARE}
 rm -f ${SOFTWARE_DIR}/${ORDS_SOFTWARE}
-mkdir -p ${ORDS_CONF}
+mkdir -p ${ORDS_CONF}/logs
 
 echo "SQLcl setup."
 cd /u01
