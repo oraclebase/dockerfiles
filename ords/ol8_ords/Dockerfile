@@ -75,7 +75,9 @@ ENV DB_HOSTNAME="ol8-19.localdomain"                                           \
     AJP_SECRET="AJPSecret1"                                                    \
     AJP_ADDRESS="::1"                                                          \
     APEX_IMAGES_REFRESH="false"                                                \
-    PROXY_IPS="123.123.123.123\|123.123.123.124"
+    PROXY_IPS="123.123.123.123\|123.123.123.124"                               \
+    JAVA_OPTS="-Dconfig.url=${ORDS_CONF} -Xms1024M -Xmx1024M"
+
 
 # ------------------------------------------------------------------------------
 # Get all the files for the build.
