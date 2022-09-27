@@ -20,7 +20,7 @@ $ tree
 └── software
     ├── apache-tomcat-9.0.67.tar.gz
     ├── apex_22.1_en.zip
-    ├── OpenJDK11U-jdk_x64_linux_hotspot_11.0.16_8.tar.gz
+    ├── OpenJDK11U-jdk_x64_linux_hotspot_11.0.16.1_1.tar.gz
     ├── ords-latest.zip
     ├── put_software_here.txt
     └── sqlcl-latest.zip
