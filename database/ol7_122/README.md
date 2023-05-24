@@ -15,7 +15,7 @@ $ tree
 │   ├── healthcheck.sh
 │   └── start.sh
 └── software
-    ├── apex_22.1_en.zip
+    ├── apex_23.1_en.zip
     ├── linuxx64_12201_database.zip
     └── put_software_here.txt
 
