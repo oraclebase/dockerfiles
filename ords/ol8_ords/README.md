@@ -18,8 +18,8 @@ $ tree
 │   ├── server.xml
 │   └── start.sh
 └── software
-    ├── apache-tomcat-9.0.78.tar.gz
-    ├── apex_23.2_en.zip
+    ├── apache-tomcat-9.0.88.tar.gz
+    ├── apex_24.1_en.zip
     ├── graalvm-jdk-17_linux-x64_bin.tar.gz
     ├── ords-latest.zip
     ├── put_software_here.txt
