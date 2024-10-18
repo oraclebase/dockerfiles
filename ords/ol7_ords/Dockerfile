@@ -2,8 +2,8 @@
 # Dockerfile to build basic Oracle REST Data Services (ORDS) images
 # Based on the following:
 #   - Oracle Linux 7 - Slim
-#   - Java 11 :
-#       https://adoptium.net/releases.html?variant=openjdk11&jvmVariant=hotspot
+#   - GraalVM :
+#       https://www.graalvm.org/downloads/
 #   - Tomcat 9.0.x :
 #       https://tomcat.apache.org/download-90.cgi
 #   - Oracle REST Data Services (ORDS) :
@@ -44,8 +44,8 @@ LABEL maintainer="tim@oracle-base.com"
 
 # ------------------------------------------------------------------------------
 # Define fixed (build time) environment variables.
-ENV JAVA_SOFTWARE="graalvm-jdk-17_linux-x64_bin.tar.gz"                        \
-    TOMCAT_SOFTWARE="apache-tomcat-9.0.91.tar.gz"                              \
+ENV JAVA_SOFTWARE="graalvm-jdk-21_linux-x64_bin.tar.gz"                        \
+    TOMCAT_SOFTWARE="apache-tomcat-9.0.96.tar.gz"                              \
     ORDS_SOFTWARE="ords-latest.zip"                                            \
     APEX_SOFTWARE="apex_24.1_en.zip"                                           \ 
     SQLCL_SOFTWARE="sqlcl-latest.zip"                                          \
