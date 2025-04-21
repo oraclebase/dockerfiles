@@ -18,7 +18,7 @@ $ tree
 │   ├── server.xml
 │   └── start.sh
 └── software
-    ├── apache-tomcat-9.0.102.tar.gz
+    ├── apache-tomcat-9.0.104.tar.gz
     ├── apex_24.2_en.zip
     ├── graalvm-jdk-21_linux-x64_bin.tar.gz
     ├── ords-latest.zip
